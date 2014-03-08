@@ -1,0 +1,2 @@
+Hello! Welcome to the Elevator Project. When this project started, we had a GUI and nothing else! Hopefully, we can pull this off quickly, and efficiently! If we still aiming for Elevator Tycoon 2014, we might want to ask the professor if we can use libraries with our project. Also, we MUST make this project truly felixable. When adding code, make sure we have the ability to simply change or control what is happening. Make sure any part of the elevator is extendable, or instanceable.
+Good luck, everyone!
