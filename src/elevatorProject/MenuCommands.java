@@ -36,11 +36,10 @@ public class MenuCommands {
 		}
 		
 		//Use the code below for a menu theme!
-//		
-//		try {
-//	        theme = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/menu.ogg"));
-//	     } catch (IOException e){
-//	        e.printStackTrace();
-//	    }	
+		try {
+	        theme = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("resources/music/menu.ogg"));
+	     } catch (IOException e){
+	        e.printStackTrace();
+	    }	
     }
 }

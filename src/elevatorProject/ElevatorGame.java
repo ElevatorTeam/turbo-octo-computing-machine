@@ -24,11 +24,9 @@ import org.newdawn.slick.state.*;
 //sbg.enterState(ElevatorProject.elevatoProgram);Za
 
 //render is called 60 times a second, and update is called inbetween each of those. To keep things clean, it is a REALLY good idea to just have
-//render and update call a different class that controls both. In fact, in my game Barnacle, the Menu class has 4 different classes, to control
-//the init, the render, the update, and also the mouseClick. in MouseClicked, button 0 is left click.
+//render and update call a different class that controls both. In fact, for the menu, the render and update section has 4 different classes, to control
+//the init, the render, the update, and also the mouse click. in MouseClicked, button 0 is left click.
 
-//Sadly, I won't be able to work on this with you. I'll be headed home around 3 in the afternoon
-//on sunday, so I won't have any internet except for my phone. This makes it rather ridiculously hard to work together.
 //There is a lot of other things about slick2d to learn, so I hope it isn't too much of a hinderance for you, and that these comments helped. 
 //Have fun!
 
