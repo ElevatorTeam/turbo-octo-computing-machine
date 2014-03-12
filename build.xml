@@ -1,0 +1,59 @@
+<project>
+	<path id="compile.classpath">
+		<fileset dir="lib/lwjgl-2.9.1/jar">
+			<include name="lwjgl.jar"/>
+		</fileset>
+		<fileset dir="lib/slick/lib/">
+			<include name="jinput.jar"/>
+			<include name="jogg-0.7.7.jar"/>
+			<include name="jorbis-0.0.15.jar"/>
+			<include name="slick.jar"/>
+		</fileset>
+	</path>	
+       	
+	<path id="run.path.id">
+		<path refid="compile.classpath"/>
+		<path location="build"/>
+	</path>	
+	<!--	<pathconvert property="mf.classpath" pathsep=" ">
+		<path refid="compile.classpath"/>
+			<mapper>
+				<chainedmapper>
+						<flattenmapper/>
+						<globmapper from="*.jar" to="lib/*.jar"/>
+				</chainedmapper>
+			</mapper>
+	</pathconvert> -->	
+	
+	<target name="clean">
+		<delete dir="build"/>
+	</target>
+	
+	<target name="compile">
+		<mkdir dir="build/classes"/>
+		<javac srcdir="src" destdir="build/classes">	
+			<classpath refid="compile.classpath"/>	
+		</javac>		
+	</target>
+	
+	<target name="jar">
+		<mkdir dir="build/jar"/>
+		<jar destfile="build/jar/ElevatorProject.jar" basedir="build/classes">
+			<manifest>
+				<attribute name="Main-Class" value="elevatorProject.ElevatorProject"/>
+			</manifest>
+		</jar>
+	    <!--<jar destfile="build/jar/ElevatorProject.jar">
+			<zipfileset dir="build/jar" includes="Elevator.jar"/>
+			<zipfileset dir="lib" includes="**/*.lib"/>
+			<manifest>
+				<attribute name="Main-Class" value="Elevator.jar/elevatorProject.ElevatorProject"/>
+				<attribute name="class-Path" value="mf.classpath"/>
+			</manifest>
+		</jar> -->	
+	</target>
+
+	<target name="run">
+		<java jar="build/jar/ElevatorProject.jar" classpathref="run.path.id" fork="true"/>
+	</target>
+</project>
