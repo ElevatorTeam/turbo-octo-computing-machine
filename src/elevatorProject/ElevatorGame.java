@@ -93,6 +93,7 @@ public class ElevatorGame extends BasicGameState{
 		
 		g.drawString("You have " + ElevatorList.size() + " Elevators. Would you like to buy a new one?   BUY", 50, 30);
 		g.drawString("You have " + moneyCount + " dollars.", 50, 55);
+		g.drawString("A new elevator will cost you " + ElevatorList.size()*4 + " dollars.", 300, 55);
 		
 		for(int k=0;k<ElevatorList.size();k++){
 			elevatorImg.draw((k*300)+100-renderLocX,height/6,width/8,height/9*4);
