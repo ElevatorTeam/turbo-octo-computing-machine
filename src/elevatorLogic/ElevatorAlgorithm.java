@@ -1,38 +1,27 @@
 package elevatorLogic;
 
+import java.util.ArrayList;
+
 public class ElevatorAlgorithm extends ElevatorControl {
+
+	boolean thisFloorChecked;
 	
-	public void getNextPassenger(){
-		
-		if(nextPassengerLocation.size()>0){
-			for(int a=0;a<nextPassengerLocation.size();a++){
-				if(nextPassengerLocation.get(a)==floor){
-					if(!ElevatorIsFull()){
-						addPassenger();
-						nextPassengerLocation.remove(a);
-					}
+	public void runAlgorithm(){
+		if(lastButtonPress<floor)
+			setVelocity(-1);
+		if(lastButtonPress>floor)
+			setVelocity(1);
+		if(lastButtonPress==floor)
+			setVelocity(0);
+	}
+	
+	public void pickUpPassengers(){
+		if(nextPassengerLocation.get(floor)>0)
+			for(int z=0;z<nextPassengerLocation.get(floor);z++){
+				if(!ElevatorIsFull()){
+					addPassenger();
+					nextPassengerLocation.set(floor, nextPassengerLocation.get(floor)-1);
 				}
 			}
-			setVelocity(0);
-		}
-		if(nextPassengerLocation.size()>0){
-			if(nextPassengerLocation.get(0)>floor)
-				setVelocity(1);
-			else if(nextPassengerLocation.get(0)<floor)
-				setVelocity(-1);
-		}
-		else setVelocity(0);
 	}
-	
-	public void doubleCheckDirection(){
-
-		if(nextPassengerLocation.size()>0){
-			if(nextPassengerLocation.get(0)<floor && position>0)
-				setVelocity(-1);
-			if(nextPassengerLocation.get(0)>floor && position<600)
-				setVelocity(1);
-		}
-		else setVelocity(0);
-	}
-
 }

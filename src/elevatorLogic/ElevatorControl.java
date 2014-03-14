@@ -10,24 +10,29 @@ public class ElevatorControl {
 	int passengerCount;
 	int maximumPassengers;
 	int position;
+	public int lastButtonPress = 0;
+	int chosenFloor;
 	ArrayList<Integer> nextPassengerLocation = new ArrayList<Integer>();
 	ArrayList<Integer> dropPassengerLocation = new ArrayList<Integer>();
 	
 	public void addPassenger(){
-		if(dropPassengerLocation.size()<maximumPassengers)
-			for(int z=0; z<dropPassengerLocation.size(); z++){
-				dropPassengerLocation.add(randInt(0,5));
+		if(dropPassengerLocation.get(floor)<maximumPassengers){
+			for(int z=0; z<dropPassengerLocation.get(floor); z++){
+				dropPassengerLocation.set(randInt(0,5), dropPassengerLocation.get(floor)+1);
 			}
+			passengerCount++;
+		}
 		else
 			System.out.println("Someone is trying to get on when the maximum capacity has already been reached. How should this be handled?");
 	}
 	
-	public void removePassenger(){
-		if(dropPassengerLocation.size()>0)
-			for(int z=0; z<dropPassengerLocation.size(); z++){
-				if(dropPassengerLocation.get(z)==floor)
-					dropPassengerLocation.remove(z);
+	public void removePassengers(){
+		if(dropPassengerLocation.get(floor)>0){
+			for(int z=0; z<dropPassengerLocation.get(floor); z++){
+					dropPassengerLocation.set(z,dropPassengerLocation.get(z)-1);
+					passengerCount--;
 			}
+		}
 	}
 	
 	public void setFloor(int newFloor){
@@ -62,10 +67,12 @@ public class ElevatorControl {
 		return position;
 	}
 	
+	public int getButton(){
+		return lastButtonPress;
+	}
+	
 	public int getNextFloor(){
-		if(nextPassengerLocation.size()>0)
-			return nextPassengerLocation.get(0);
-		return -1;
+		return nextPassengerLocation.get(lastButtonPress);
 	}
 
 	public static int randInt(int min, int max) {

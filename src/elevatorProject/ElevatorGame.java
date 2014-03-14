@@ -102,6 +102,7 @@ public class ElevatorGame extends BasicGameState{
 			g.drawString("next floor:  " + (ElevatorList.get(k).getNextFloor() + 1),(k*300)+100-renderLocX,height/3*2+35);
 			g.drawString("Velocity:  " + ElevatorList.get(k).getVelocity(),(k*300)+100-renderLocX,height/3*2+70);
 			g.drawString("Position:  " + ElevatorList.get(k).getPosition(),(k*300)+100-renderLocX,height/3*2+105);
+			g.drawString("ChosenButton:  " + ElevatorList.get(k).getButton(),(k*300)+100-renderLocX,height/3*2+140);
 		}
 		
 	}
@@ -109,23 +110,10 @@ public class ElevatorGame extends BasicGameState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException{
-		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
-			if(renderLocX<(ElevatorList.size()-3)*300-100)
-				renderLocX+=2;
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
-			if(renderLocX>0)
-				renderLocX-=2;
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
-			sbg.enterState(ElevatorProject.startMenu);
-		}
 		
 		for(int q=0;q<ElevatorList.size();q++){
 			ElevatorList.get(q).setPosition();
 			ElevatorList.get(q).getIfOnFloor();
-			ElevatorList.get(q).addRandom();
-			ElevatorList.get(q).doubleCheckDirection();
 		}
 		
 		moneyUpdate=ElevatorList.size()/2;
@@ -134,6 +122,20 @@ public class ElevatorGame extends BasicGameState{
 		 for(int s=0;s<ElevatorList.size();s++){
 				ElevatorList.get(s).addRandom();
 			}
+		}
+	
+		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
+			if(renderLocX>0)
+				renderLocX-=4;
+		}
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
+			if(renderLocX<(ElevatorList.size()-3)*300-100)
+				renderLocX+=4;
+		}
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
+			sbg.enterState(ElevatorProject.startMenu);
 		}
 		
 		frameCount+=1;

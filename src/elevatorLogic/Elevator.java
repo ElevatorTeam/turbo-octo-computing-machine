@@ -14,21 +14,29 @@ public class Elevator extends ElevatorAlgorithm {
 		passengerCount=0;
 		maximumPassengers=10;
 		position=0;
+		for(int k = 0; k<6;k++){
+			nextPassengerLocation.add(0);
+			dropPassengerLocation.add(0);
+		}
+		thisFloorChecked=false;
 	}
 	
 	public void getIfOnFloor(){
 		if(position%120==0){
-			removePassenger();
-			floor=position%300;
-			setVelocity(0);
-			getNextPassenger();
+			floor=position%120;
+			removePassengers();
+			pickUpPassengers();
+			if(floor==lastButtonPress)
+				runAlgorithm();
 		}
-		floor=position/120;
 	}
 	
-	
 	public void addRandom(){
-		if(randInt(0,20)>18)
-			nextPassengerLocation.add(randInt(0, 5));
+		if(randInt(0,20)>18){
+			chosenFloor= nextPassengerLocation.get(randInt(0, 5));
+			nextPassengerLocation.set(chosenFloor,chosenFloor+1);
+			if(floor==lastButtonPress)
+				lastButtonPress=chosenFloor;
+		}
 	}
 }
