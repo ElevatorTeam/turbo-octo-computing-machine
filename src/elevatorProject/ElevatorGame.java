@@ -99,7 +99,7 @@ public class ElevatorGame extends BasicGameState{
 			elevatorImg.draw((k*300)+100-renderLocX,height/6,width/8,height/9*4);
 			g.drawString("floor " + (ElevatorList.get(k).getFloor() + 1), (k*300)+135-renderLocX,height/6+35);
 			g.drawString("passengers: " + ElevatorList.get(k).getPassengerCount(),(k*300)+100-renderLocX,height/3*2);
-			g.drawString("next floor:  " + ElevatorList.get(k).getNextFloor(),(k*300)+100-renderLocX,height/3*2+35);
+			g.drawString("next floor:  " + (ElevatorList.get(k).getNextFloor() + 1),(k*300)+100-renderLocX,height/3*2+35);
 			g.drawString("Velocity:  " + ElevatorList.get(k).getVelocity(),(k*300)+100-renderLocX,height/3*2+70);
 			g.drawString("Position:  " + ElevatorList.get(k).getPosition(),(k*300)+100-renderLocX,height/3*2+105);
 		}
@@ -123,15 +123,16 @@ public class ElevatorGame extends BasicGameState{
 		
 		for(int q=0;q<ElevatorList.size();q++){
 			ElevatorList.get(q).setPosition();
-			ElevatorList.get(q).TakeTurn();
-			ElevatorList.get(q).onFloor();
+			ElevatorList.get(q).getIfOnFloor();
+			ElevatorList.get(q).addRandom();
+			ElevatorList.get(q).doubleCheckDirection();
 		}
 		
 		moneyUpdate=ElevatorList.size()/2;
 		if(frameCount%60==0){
 		 moneyCount+=moneyUpdate;
-		 for(int z=0;z<ElevatorList.size();z++){
-			 ElevatorList.get(z).addRandom();
+		 for(int s=0;s<ElevatorList.size();s++){
+				ElevatorList.get(s).addRandom();
 			}
 		}
 		

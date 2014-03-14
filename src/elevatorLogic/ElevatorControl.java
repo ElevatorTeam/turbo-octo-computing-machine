@@ -10,21 +10,24 @@ public class ElevatorControl {
 	int passengerCount;
 	int maximumPassengers;
 	int position;
-	boolean stoppedOnFloor = true;
 	ArrayList<Integer> nextPassengerLocation = new ArrayList<Integer>();
+	ArrayList<Integer> dropPassengerLocation = new ArrayList<Integer>();
 	
 	public void addPassenger(){
-		if(passengerCount<maximumPassengers)
-			passengerCount++;
+		if(dropPassengerLocation.size()<maximumPassengers)
+			for(int z=0; z<dropPassengerLocation.size(); z++){
+				dropPassengerLocation.add(randInt(0,5));
+			}
 		else
 			System.out.println("Someone is trying to get on when the maximum capacity has already been reached. How should this be handled?");
 	}
 	
 	public void removePassenger(){
-		if(passengerCount>0)
-			passengerCount--;
-		else
-			 System.out.println("Hey, your elevator tried to remove someone that WASNT EVEN THERE. You should probably look in to that.");		
+		if(dropPassengerLocation.size()>0)
+			for(int z=0; z<dropPassengerLocation.size(); z++){
+				if(dropPassengerLocation.get(z)==floor)
+					dropPassengerLocation.remove(z);
+			}
 	}
 	
 	public void setFloor(int newFloor){

@@ -16,30 +16,16 @@ public class Elevator extends ElevatorAlgorithm {
 		position=0;
 	}
 	
-	public Elevator(int floor, int passengerCount){
-		this.floor = floor;
-		velocity = 0;
-		this.passengerCount=passengerCount;
-		maximumPassengers=10;
-		position=0;
-	}
-		
-	public void TakeTurn() {
-		if(stoppedOnFloor==true){
+	public void getIfOnFloor(){
+		if(position%120==0){
+			removePassenger();
+			floor=position%300;
+			setVelocity(0);
 			getNextPassenger();
 		}
+		floor=position/120;
 	}
 	
-	public void onFloor(){
-		if(position%300==0){
-			stoppedOnFloor=true;
-			floor=position%300;
-		}
-		else
-			stoppedOnFloor=false;
-		
-		floor=position/300;
-	}
 	
 	public void addRandom(){
 		if(randInt(0,20)>18)
