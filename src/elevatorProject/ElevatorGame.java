@@ -4,11 +4,19 @@ package elevatorProject;
 //import elevatorLogic.*;
 //When we end up using that, we have to uncomment it.
 
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
+import org.newdawn.slick.util.ResourceLoader;
 
-//init is actual called when this class is created inside of ElevatorProject, our main class.
+import elevatorLogic.*;
+
+/*//init is actual called when this class is created inside of ElevatorProject, our main class.
 // The reason why, is because each "state" of the game, like the main menu, and the elevator section itself only exists once.
 //Therefore, to have the main menu edit in-game things, you must use static methods inside of here, because the class itself is a static instance.
 //For example, if we want to have the main menu control whether the game produces a new person every 5 seconds or every 20 seconds, you must make
@@ -29,6 +37,7 @@ import org.newdawn.slick.state.*;
 
 //There is a lot of other things about slick2d to learn, so I hope it isn't too much of a hinderance for you, and that these comments helped. 
 //Have fun!
+*/
 
 public class ElevatorGame extends BasicGameState{
 	
@@ -36,7 +45,12 @@ public class ElevatorGame extends BasicGameState{
     int width;
     int height;
     boolean setWidth= true;
-    Image renderProof;
+    TrueTypeFont font;
+    
+    //Everything below this is related to Elevators
+    ArrayList<Elevator> ElevatorList = new ArrayList<Elevator>();
+    static int renderLocX;
+    static Image elevatorImg;
 	
 	public ElevatorGame(int state) {
 		 this.state = state;
@@ -45,7 +59,19 @@ public class ElevatorGame extends BasicGameState{
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-		renderProof= new Image("resources/images/render.png");
+		elevatorImg= new Image("resources/images/Elevator.png");
+		renderLocX = 0;
+		ElevatorList.add(new Elevator());
+		ElevatorList.add(new Elevator());
+		ElevatorList.add(new Elevator());
+		ElevatorList.add(new Elevator());
+		System.out.println("elevator list size: " + ElevatorList.size());
+		Font awtFont;
+		try {
+			awtFont = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("game_over.ttf"));
+			awtFont = awtFont.deriveFont(84f); // set font size
+			font = new TrueTypeFont(awtFont, false);
+		} catch (FontFormatException | IOException e) {e.printStackTrace();}
 	}
 	
 	@Override
@@ -55,13 +81,28 @@ public class ElevatorGame extends BasicGameState{
 			width=gc.getWidth();
 			height=gc.getHeight();
 			setWidth=false;
+			g.setFont(font);
+			g.setColor(Color.red);
 		}
-		renderProof.draw(0,0,width,height);
+		
+		for(int k=0;k<ElevatorList.size();k++){
+			elevatorImg.draw((k*300)+100-renderLocX,height/6,width/8,height/9*4);
+			g.drawString("floor " + ElevatorList.get(k).getFloor(),(k*300)+135-renderLocX,height/6+35);
+		}
+		
 	}
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException{
+		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
+			if(renderLocX<(ElevatorList.size()-3)*300)
+				renderLocX+=2;
+		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
+			if(renderLocX>0)
+				renderLocX-=2;
+		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
 			sbg.enterState(ElevatorProject.startMenu);
 		}

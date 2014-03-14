@@ -13,15 +13,13 @@ public class ElevatorProject extends StateBasedGame{
 	public ElevatorProject(String gamename)
 	{
 		super(gamename);
-		this.addState(new StartMenu(startMenu));
-		this.addState(new ElevatorGame(elevatorProgram));
 	}
 	
 	public void initStatesList(GameContainer gc) throws SlickException{
-	      this.getState(startMenu).init(gc, this);
-	      this.getState(elevatorProgram).init(gc, this);
-	      this.enterState(startMenu);
-	   }
+		this.addState(new StartMenu(startMenu));
+		this.addState(new ElevatorGame(elevatorProgram));
+	    this.enterState(startMenu);
+	}
 	
 	public static void main(String[] args){
 		try{
