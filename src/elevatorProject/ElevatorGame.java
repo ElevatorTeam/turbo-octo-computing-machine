@@ -51,6 +51,9 @@ public class ElevatorGame extends BasicGameState{
     ArrayList<Elevator> ElevatorList = new ArrayList<Elevator>();
     static int renderLocX;
     static Image elevatorImg;
+    static int moneyCount;
+    static int frameCount;
+    static int moneyUpdate;
 	
 	public ElevatorGame(int state) {
 		 this.state = state;
@@ -61,6 +64,9 @@ public class ElevatorGame extends BasicGameState{
 			throws SlickException {
 		elevatorImg= new Image("resources/images/Elevator.png");
 		renderLocX = 0;
+		moneyCount = 0;
+		frameCount = 0;
+		moneyUpdate= 1;
 		ElevatorList.add(new Elevator());
 		ElevatorList.add(new Elevator());
 		ElevatorList.add(new Elevator());
@@ -86,13 +92,16 @@ public class ElevatorGame extends BasicGameState{
 		}
 		
 		g.drawString("You have " + ElevatorList.size() + " Elevators. Would you like to buy a new one?   BUY", 50, 30);
+		g.drawString("You have " + moneyCount + " dollars.", 50, 55);
+		g.drawString("A new elevator will cost you " + ElevatorList.size()*4 + " dollars.", 300, 55);
 		
 		for(int k=0;k<ElevatorList.size();k++){
 			elevatorImg.draw((k*300)+100-renderLocX,height/6,width/8,height/9*4);
-			g.drawString("floor " + ElevatorList.get(k).getFloor(),(k*300)+135-renderLocX,height/6+35);
+			g.drawString("floor " + (ElevatorList.get(k).getFloor() + 1), (k*300)+135-renderLocX,height/6+35);
 			g.drawString("passengers: " + ElevatorList.get(k).getPassengerCount(),(k*300)+100-renderLocX,height/3*2);
-			g.drawString("next Floor: " + ElevatorList.get(k).getFloor(),(k*300)+100-renderLocX,height/3*2+35);
+			g.drawString("next floor:  " + ElevatorList.get(k).getNextFloor(),(k*300)+100-renderLocX,height/3*2+35);
 			g.drawString("Velocity:  " + ElevatorList.get(k).getVelocity(),(k*300)+100-renderLocX,height/3*2+70);
+			g.drawString("Position:  " + ElevatorList.get(k).getPosition(),(k*300)+100-renderLocX,height/3*2+105);
 		}
 		
 	}
@@ -101,7 +110,7 @@ public class ElevatorGame extends BasicGameState{
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException{
 		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
-			if(renderLocX<(ElevatorList.size()-3)*300)
+			if(renderLocX<(ElevatorList.size()-3)*300-100)
 				renderLocX+=2;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
@@ -111,9 +120,38 @@ public class ElevatorGame extends BasicGameState{
 		if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
 			sbg.enterState(ElevatorProject.startMenu);
 		}
+		
+		for(int q=0;q<ElevatorList.size();q++){
+			ElevatorList.get(q).setPosition();
+			ElevatorList.get(q).TakeTurn();
+			ElevatorList.get(q).onFloor();
+		}
+		
+		moneyUpdate=ElevatorList.size()/2;
+		if(frameCount%60==0){
+		 moneyCount+=moneyUpdate;
+		 for(int z=0;z<ElevatorList.size();z++){
+			 ElevatorList.get(z).addRandom();
+			}
+		}
+		
+		frameCount+=1;
 	}
 	
 	public void mouseClicked(int button, int x, int y, int clickCount){
+		if (button==0){
+			
+			//buying new elevator
+			if(x>550 && x<600)
+				if(y>25 && y<50)
+					if(moneyCount>=ElevatorList.size()*4){
+						moneyCount-=ElevatorList.size()*4;
+						ElevatorList.add(new Elevator());
+					}
+				
+			//doing something else
+			
+		}
 	}
 	
 	@Override
