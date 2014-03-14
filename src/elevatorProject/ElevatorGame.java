@@ -85,9 +85,14 @@ public class ElevatorGame extends BasicGameState{
 			g.setColor(Color.red);
 		}
 		
+		g.drawString("You have " + ElevatorList.size() + " Elevators. Would you like to buy a new one?   BUY", 50, 30);
+		
 		for(int k=0;k<ElevatorList.size();k++){
 			elevatorImg.draw((k*300)+100-renderLocX,height/6,width/8,height/9*4);
 			g.drawString("floor " + ElevatorList.get(k).getFloor(),(k*300)+135-renderLocX,height/6+35);
+			g.drawString("passengers: " + ElevatorList.get(k).getPassengerCount(),(k*300)+100-renderLocX,height/3*2);
+			g.drawString("next Floor: " + ElevatorList.get(k).getFloor(),(k*300)+100-renderLocX,height/3*2+35);
+			g.drawString("Velocity:  " + ElevatorList.get(k).getVelocity(),(k*300)+100-renderLocX,height/3*2+70);
 		}
 		
 	}
