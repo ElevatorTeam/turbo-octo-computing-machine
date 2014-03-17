@@ -102,7 +102,6 @@ public class ElevatorGame extends BasicGameState{
 			g.drawString("next floor:  " + (ElevatorList.get(k).getNextFloor() + 1),(k*300)+100-renderLocX,height/3*2+35);
 			g.drawString("Velocity:  " + ElevatorList.get(k).getVelocity(),(k*300)+100-renderLocX,height/3*2+70);
 			g.drawString("Position:  " + ElevatorList.get(k).getPosition(),(k*300)+100-renderLocX,height/3*2+105);
-			g.drawString("ChosenButton:  " + ElevatorList.get(k).getButton(),(k*300)+100-renderLocX,height/3*2+140);
 		}
 		
 	}
@@ -113,15 +112,21 @@ public class ElevatorGame extends BasicGameState{
 		
 		for(int q=0;q<ElevatorList.size();q++){
 			ElevatorList.get(q).setPosition();
-			ElevatorList.get(q).getIfOnFloor();
+			if(frameCount%60==0)
+				ElevatorList.get(q).addRandom();
+			if(ElevatorList.get(q).ifOnFloor()){
+				ElevatorList.get(q).setNewFloor();
+				ElevatorList.get(q).removePassengers();
+				ElevatorList.get(q).pickUpPassengers();
+				if(ElevatorList.get(q).reachedDestination() || frameCount<2 || ElevatorList.get(q).atTopOrButtom())
+					ElevatorList.get(q).runAlgorithm();
+			}
 		}
 		
 		moneyUpdate=ElevatorList.size()/2;
+		
 		if(frameCount%60==0){
 		 moneyCount+=moneyUpdate;
-		 for(int s=0;s<ElevatorList.size();s++){
-				ElevatorList.get(s).addRandom();
-			}
 		}
 	
 		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){

@@ -18,25 +18,33 @@ public class Elevator extends ElevatorAlgorithm {
 			nextPassengerLocation.add(0);
 			dropPassengerLocation.add(0);
 		}
-		thisFloorChecked=false;
 	}
 	
-	public void getIfOnFloor(){
-		if(position%120==0){
-			floor=position%120;
-			removePassengers();
-			pickUpPassengers();
-			if(floor==lastButtonPress)
-				runAlgorithm();
-		}
+	public boolean ifOnFloor(){
+		if(position%120==0)
+			return true;
+		return false;
+	}
+	
+	public void setNewFloor(){
+		floor=position/120;
+	}
+	
+	public void chooseNextFloor(){
+		getNextFloor();
+	}
+	
+	public boolean reachedDestination(){
+		if(floor==lastButtonPress)
+			return true;
+		return false;
 	}
 	
 	public void addRandom(){
-		if(randInt(0,20)>18){
-			chosenFloor= nextPassengerLocation.get(randInt(0, 5));
+		if(randInt(0,20)>2){
+			chosenFloor= randInt(0, 5);
 			nextPassengerLocation.set(chosenFloor,chosenFloor+1);
-			if(floor==lastButtonPress)
-				lastButtonPress=chosenFloor;
+			lastButtonPress=chosenFloor;
 		}
 	}
 }
