@@ -10,10 +10,11 @@
 			<include name="slick.jar"/>
 		</fileset>
 	</path>	
+	<property name="libs" value="lib"/>
        	
-	<path id="run.path.id">
-		<path refid="compile.classpath"/>
-		<path location="build"/>
+	<path id="run.classpath">
+		<zipfileset refid="compile.classpath"/>
+		<path location="build/classes"/>
 	</path>	
 	<!--	<pathconvert property="mf.classpath" pathsep=" ">
 		<path refid="compile.classpath"/>
@@ -24,7 +25,6 @@
 				</chainedmapper>
 			</mapper>
 	</pathconvert> -->	
-	
 	<target name="clean">
 		<delete dir="build"/>
 	</target>
@@ -41,7 +41,10 @@
 		<jar destfile="build/jar/ElevatorProject.jar" basedir="build/classes">
 			<manifest>
 				<attribute name="Main-Class" value="elevatorProject.ElevatorProject"/>
+				<attribute name="Class-Path" value="../../lib/slick/lib/jinput.jar ../../lib/slick/lib/jogg-0.7.7.jar ../../lib/slick/lib/jorbis-0.0.15.jar ../../lib/slick/lib/slick.jar ../../lib/lwjgl-2.9.1/jar/lwjgl.jar"/> 
+				<!--<attribute name="Library-Path" value="../../lib/lwjgl-2.9.1/native/linux/liblwjgl64.so ../../lib/lwjgl-2.9.1/native/linux/libjinput-linux64.so ../../lib/lwjgl-2.9.1/native/linux/libopenal64al.so"/> -->
 			</manifest>
+<!--			<zipgroupfileset dir="lib" includes="**/*.jar"/>-->
 		</jar>
 	    <!--<jar destfile="build/jar/ElevatorProject.jar">
 			<zipfileset dir="build/jar" includes="Elevator.jar"/>
@@ -50,10 +53,15 @@
 				<attribute name="Main-Class" value="Elevator.jar/elevatorProject.ElevatorProject"/>
 				<attribute name="class-Path" value="mf.classpath"/>
 			</manifest>
-		</jar> -->	
+		</jar> -->j
 	</target>
 
 	<target name="run">
-		<java jar="build/jar/ElevatorProject.jar" classpathref="run.path.id" fork="true"/>
+		<java dir="build/classes"  classname="elevatorProject.ElevatorProject" classpathref="run.classpath" fork="true"/>
+	</target>
+	<target name="jarrun">
+		<java jar="build/jar/ElevatorProject.jar" fork="true">
+			<jvmarg value="-Djava.library.path="/>
+		</java>
 	</target>
 </project>
