@@ -99,7 +99,7 @@ public class ElevatorGame extends BasicGameState{
 			elevatorImg.draw((k*300)+100-renderLocX,height/6,width/8,height/9*4);
 			g.drawString("floor " + (ElevatorList.get(k).getFloor() + 1), (k*300)+135-renderLocX,height/6+35);
 			g.drawString("passengers: " + ElevatorList.get(k).getPassengerCount(),(k*300)+100-renderLocX,height/3*2);
-			g.drawString("next floor:  " + ElevatorList.get(k).getNextFloor(),(k*300)+100-renderLocX,height/3*2+35);
+			g.drawString("next floor:  " + (ElevatorList.get(k).getNextFloor() + 1),(k*300)+100-renderLocX,height/3*2+35);
 			g.drawString("Velocity:  " + ElevatorList.get(k).getVelocity(),(k*300)+100-renderLocX,height/3*2+70);
 			g.drawString("Position:  " + ElevatorList.get(k).getPosition(),(k*300)+100-renderLocX,height/3*2+105);
 		}
@@ -109,30 +109,38 @@ public class ElevatorGame extends BasicGameState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException{
-		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
-			if(renderLocX<(ElevatorList.size()-3)*300-100)
-				renderLocX+=2;
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
-			if(renderLocX>0)
-				renderLocX-=2;
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
-			sbg.enterState(ElevatorProject.startMenu);
-		}
 		
 		for(int q=0;q<ElevatorList.size();q++){
 			ElevatorList.get(q).setPosition();
-			ElevatorList.get(q).TakeTurn();
-			ElevatorList.get(q).onFloor();
+			if(frameCount%60==0)
+				ElevatorList.get(q).addRandom();
+			if(ElevatorList.get(q).ifOnFloor()){
+				ElevatorList.get(q).setNewFloor();
+				ElevatorList.get(q).removePassengers();
+				ElevatorList.get(q).pickUpPassengers();
+				if(ElevatorList.get(q).reachedDestination() || frameCount<2 || ElevatorList.get(q).atTopOrButtom())
+					ElevatorList.get(q).runAlgorithm();
+			}
 		}
 		
 		moneyUpdate=ElevatorList.size()/2;
+		
 		if(frameCount%60==0){
 		 moneyCount+=moneyUpdate;
-		 for(int z=0;z<ElevatorList.size();z++){
-			 ElevatorList.get(z).addRandom();
-			}
+		}
+	
+		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
+			if(renderLocX>0)
+				renderLocX-=4;
+		}
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
+			if(renderLocX<(ElevatorList.size()-3)*300-100)
+				renderLocX+=4;
+		}
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
+			sbg.enterState(ElevatorProject.startMenu);
 		}
 		
 		frameCount+=1;

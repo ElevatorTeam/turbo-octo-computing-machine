@@ -14,35 +14,37 @@ public class Elevator extends ElevatorAlgorithm {
 		passengerCount=0;
 		maximumPassengers=10;
 		position=0;
-	}
-	
-	public Elevator(int floor, int passengerCount){
-		this.floor = floor;
-		velocity = 0;
-		this.passengerCount=passengerCount;
-		maximumPassengers=10;
-		position=0;
-	}
-		
-	public void TakeTurn() {
-		if(stoppedOnFloor==true){
-			getNextPassenger();
+		for(int k = 0; k<6;k++){
+			nextPassengerLocation.add(0);
+			dropPassengerLocation.add(0);
 		}
 	}
 	
-	public void onFloor(){
-		if(position%300==0){
-			stoppedOnFloor=true;
-			floor=position%300;
-		}
-		else
-			stoppedOnFloor=false;
-		
-		floor=position/300;
+	public boolean ifOnFloor(){
+		if(position%120==0)
+			return true;
+		return false;
+	}
+	
+	public void setNewFloor(){
+		floor=position/120;
+	}
+	
+	public void chooseNextFloor(){
+		getNextFloor();
+	}
+	
+	public boolean reachedDestination(){
+		if(floor==lastButtonPress)
+			return true;
+		return false;
 	}
 	
 	public void addRandom(){
-		if(randInt(0,20)>18)
-			nextPassengerLocation.add(randInt(0, 5));
+		if(randInt(0,20)>2){
+			chosenFloor= randInt(0, 5);
+			nextPassengerLocation.set(chosenFloor,chosenFloor+1);
+			lastButtonPress=chosenFloor;
+		}
 	}
 }

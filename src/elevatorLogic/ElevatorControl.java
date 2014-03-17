@@ -10,22 +10,10 @@ public class ElevatorControl {
 	int passengerCount;
 	int maximumPassengers;
 	int position;
-	boolean stoppedOnFloor = true;
+	public int lastButtonPress = 0;
+	int chosenFloor;
 	ArrayList<Integer> nextPassengerLocation = new ArrayList<Integer>();
-	
-	public void addPassenger(){
-		if(passengerCount<maximumPassengers)
-			passengerCount++;
-		else
-			System.out.println("Someone is trying to get on when the maximum capacity has already been reached. How should this be handled?");
-	}
-	
-	public void removePassenger(){
-		if(passengerCount>0)
-			passengerCount--;
-		else
-			 System.out.println("Hey, your elevator tried to remove someone that WASNT EVEN THERE. You should probably look in to that.");		
-	}
+	ArrayList<Integer> dropPassengerLocation = new ArrayList<Integer>();
 	
 	public void setFloor(int newFloor){
 		floor=newFloor;
@@ -53,6 +41,8 @@ public class ElevatorControl {
 
 	public void setPosition(){
 		position+=velocity;
+		if(position>600)
+			position=600;
 	}
 
 	public int getPosition(){
@@ -60,9 +50,13 @@ public class ElevatorControl {
 	}
 	
 	public int getNextFloor(){
-		if(nextPassengerLocation.size()>0)
-			return nextPassengerLocation.get(0);
-		return -1;
+		return lastButtonPress;
+	}
+	
+	public boolean atTopOrButtom(){
+		if(floor==0 || floor==5)
+			return true;
+		return false;
 	}
 
 	public static int randInt(int min, int max) {
