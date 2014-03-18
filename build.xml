@@ -31,6 +31,11 @@
 	
 	<target name="compile">
 		<mkdir dir="build/classes"/>
+		<copy includeemptydirs="false" todir="build/classes">
+			<fileset dir="src">
+				<exclude name="**/*.java"/>
+			</fileset>
+		</copy>	
 		<javac srcdir="src" destdir="build/classes">	
 			<classpath refid="compile.classpath"/>	
 		</javac>		
@@ -41,7 +46,7 @@
 		<jar destfile="build/jar/ElevatorProject.jar" basedir="build/classes">
 			<manifest>
 				<attribute name="Main-Class" value="elevatorProject.ElevatorProject"/>
-				<attribute name="Class-Path" value="../../lib/slick/lib/jinput.jar ../../lib/slick/lib/jogg-0.7.7.jar ../../lib/slick/lib/jorbis-0.0.15.jar ../../lib/slick/lib/slick.jar ../../lib/lwjgl-2.9.1/jar/lwjgl.jar"/> 
+				<attribute name="Class-Path" value="../../lib/slick/lib/jinput.jar ../../lib/slick/lib/jogg-0.0.7.jar ../../lib/slick/lib/jorbis-0.0.15.jar ../../lib/slick/lib/slick.jar ../../lib/lwjgl-2.9.1/jar/lwjgl.jar"/> 
 				<!--<attribute name="Library-Path" value="../../lib/lwjgl-2.9.1/native/linux/liblwjgl64.so ../../lib/lwjgl-2.9.1/native/linux/libjinput-linux64.so ../../lib/lwjgl-2.9.1/native/linux/libopenal64al.so"/> -->
 			</manifest>
 <!--			<zipgroupfileset dir="lib" includes="**/*.jar"/>-->
@@ -53,7 +58,7 @@
 				<attribute name="Main-Class" value="Elevator.jar/elevatorProject.ElevatorProject"/>
 				<attribute name="class-Path" value="mf.classpath"/>
 			</manifest>
-		</jar> -->j
+		</jar> -->
 	</target>
 
 	<target name="run">
@@ -61,7 +66,8 @@
 	</target>
 	<target name="jarrun">
 		<java jar="build/jar/ElevatorProject.jar" fork="true">
-			<jvmarg value="-Djava.library.path="/>
+			<jvmarg line="-Dorg.lwjgl.opengl.Display.allowSoftwareOpenGL=false"/>	
+			<jvmarg line="-Djava.library.path=lib/lwjgl-2.9.1/native/linux/"/>
 		</java>
 	</target>
 </project>
