@@ -11,7 +11,6 @@ import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 
-@SuppressWarnings("unused")
 public class MenuCommands {
 	
 	int state;
