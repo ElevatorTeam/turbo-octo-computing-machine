@@ -6,6 +6,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class MenuClick extends MenuCommands {
 	
+	//don't touch
+	
 	int width;
 	int height;
 	StateBasedGame sbg;

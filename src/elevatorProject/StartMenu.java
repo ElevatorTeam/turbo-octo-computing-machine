@@ -5,6 +5,10 @@ import org.newdawn.slick.state.*;
 
 public class StartMenu extends BasicGameState{
 	
+	//this is the main start menu class, it uses MenuRender, MenuUpdate, MenuClick, and MenuCommands to do its job.
+	//You should probably just leave all 5 of these classes alone, they're rather complicated and don't have anything to do
+	//with the game itself
+	
 	private int state;
     int width;
     int height;

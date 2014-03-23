@@ -4,6 +4,9 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
 public class ElevatorProject extends StateBasedGame{
+	
+	//This is the main class here! Also don't touch, has nothing to do with the elevator project itself.
+	
 	public static final String gamename = "Elevator Simulator 2014";
 	public static final int startMenu = 0;
 	public static final int elevatorProgram = 1;

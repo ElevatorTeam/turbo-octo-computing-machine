@@ -2,41 +2,14 @@ package elevatorLogic;
 
 import java.util.ArrayList;
 
-public class ElevatorAlgorithm extends ElevatorControl {
+public class ElevatorAlgorithm extends ElevatorPassengers{
 	
+	//this is the class that controls the direction the elevator is going.
+	//runAlgorithm shall be the function that STARTS the algoritm on finding which way the elevator should go.
 	public void runAlgorithm(){
-		if(lastButtonPress>floor)
+		if(destination>floor)
 			setVelocity(1);
-		if(lastButtonPress<floor)
+		if(destination<floor)
 			setVelocity(-1);
-	}
-	
-	public void pickUpPassengers(){
-		if(nextPassengerLocation.get(floor)>0)
-			for(int z=0;z<nextPassengerLocation.get(floor);z++){
-				if(!ElevatorIsFull()){
-					addPassenger();
-					nextPassengerLocation.set(floor, nextPassengerLocation.get(floor)-1);
-				}
-			}
-	}
-	
-	public void addPassenger(){
-		for(int z=0; z<nextPassengerLocation.get(floor); z++){
-			if(passengerCount<maximumPassengers){
-				nextPassengerLocation.set(floor, nextPassengerLocation.get(floor)-1);
-				dropPassengerLocation.set(randInt(0,5), dropPassengerLocation.get(floor)+1);
-				passengerCount++;
-			}
-		}
-	}
-	
-	public void removePassengers(){
-		if(dropPassengerLocation.get(floor)>0){
-			for(int z=0; z<dropPassengerLocation.get(floor); z++){
-				dropPassengerLocation.set(floor, dropPassengerLocation.get(floor)-1);
-				passengerCount--;
-			}
-		}
 	}
 }

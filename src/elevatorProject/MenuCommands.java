@@ -13,6 +13,8 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class MenuCommands {
 	
+	//don't touch.
+	
 	int state;
 	TrueTypeFont font;
 	Image MenuBack;
