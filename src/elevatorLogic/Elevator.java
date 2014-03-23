@@ -35,16 +35,17 @@ public class Elevator extends ElevatorAlgorithm {
 	}
 	
 	public boolean reachedDestination(){
-		if(floor==lastButtonPress)
+		if(floor==destination)
 			return true;
 		return false;
 	}
 	
+	//Adds one person to a random floor 25% of the time. Curently set to be called once a second insinde the ElevatorGame class.
 	public void addRandom(){
-		if(randInt(0,20)>2){
+		if(randInt(0,20)>15){
 			chosenFloor= randInt(0, 5);
 			nextPassengerLocation.set(chosenFloor,chosenFloor+1);
-			lastButtonPress=chosenFloor;
+			destination=chosenFloor;
 		}
 	}
 }

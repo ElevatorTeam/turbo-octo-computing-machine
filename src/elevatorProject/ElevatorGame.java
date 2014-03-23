@@ -16,6 +16,10 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import elevatorLogic.*;
 
+//THIS IS THE ONLY CLASS IN THIS PACKAGE YOU SHOULD REALLY BE TOUCHING AT ALL. This is the render class and update class
+//for the game half of this project.
+//The elevatorLogic package is the second half, which is what actually touches the elevators.
+
 /*//init is actual called when this class is created inside of ElevatorProject, our main class.
 // The reason why, is because each "state" of the game, like the main menu, and the elevator section itself only exists once.
 //Therefore, to have the main menu edit in-game things, you must use static methods inside of here, because the class itself is a static instance.
@@ -110,18 +114,37 @@ public class ElevatorGame extends BasicGameState{
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException{
 		
+		
+		//
+		//
+		//this is called 60 times a second, so everything happens at least once per frame
+		
+		//sets everything that happens in each elevator
 		for(int q=0;q<ElevatorList.size();q++){
+			//sets position of each elevator
 			ElevatorList.get(q).setPosition();
+			
+			//once a second, a new person is sometimes added to a random floor per elevator
 			if(frameCount%60==0)
 				ElevatorList.get(q).addRandom();
+			
+			//if the elevator is sitting on a floor, so it can open its doors and take passengers.
 			if(ElevatorList.get(q).ifOnFloor()){
+				//it finds out what floor it is.
 				ElevatorList.get(q).setNewFloor();
+				//It lets anyone off who is getting off here.
 				ElevatorList.get(q).removePassengers();
+				//picks up anyone who is on this floor.
 				ElevatorList.get(q).pickUpPassengers();
+				//This is the algorithm. This is what tells the elevator where to go.
 				if(ElevatorList.get(q).reachedDestination() || frameCount<2 || ElevatorList.get(q).atTopOrButtom())
 					ElevatorList.get(q).runAlgorithm();
 			}
 		}
+		
+		//End of all the elevator code.
+		//
+		//
 		
 		moneyUpdate=ElevatorList.size()/2;
 		
@@ -147,8 +170,9 @@ public class ElevatorGame extends BasicGameState{
 	}
 	
 	public void mouseClicked(int button, int x, int y, int clickCount){
+		
+		//This is how you buy a new elevator! 
 		if (button==0){
-			
 			//buying new elevator
 			if(x>550 && x<600)
 				if(y>25 && y<50)
@@ -156,8 +180,6 @@ public class ElevatorGame extends BasicGameState{
 						moneyCount-=ElevatorList.size()*4;
 						ElevatorList.add(new Elevator());
 					}
-				
-			//doing something else
 			
 		}
 	}

@@ -5,13 +5,20 @@ import java.util.Random;
 
 public class ElevatorControl {
 	
+	//This class really doesn't DO anything. It is the same as the MenuCommands class, it is here to create stuff.
+	//Most of the functions revolve around getting or setting a variable.
 	int floor;
 	int velocity;
 	int passengerCount;
 	int maximumPassengers;
 	int position;
-	public int lastButtonPress = 0;
+	int destination = 0;
 	int chosenFloor;
+	
+	//These 2 ArrayLists are the most important objects in all of the elevator classes.
+	//The "nextPassengerLocation" is the amount of people standing outside of the elevators on each floor.
+	//for example, if nextPassengerLocation.get(0) is 3, then there are 3 people standing outside of the elevator on floor 0.
+	//On the other hand, dropPassengerLocation is the floor people inside the elevator want to be dropped off at.
 	ArrayList<Integer> nextPassengerLocation = new ArrayList<Integer>();
 	ArrayList<Integer> dropPassengerLocation = new ArrayList<Integer>();
 	
@@ -50,11 +57,11 @@ public class ElevatorControl {
 	}
 	
 	public int getNextFloor(){
-		return lastButtonPress;
+		return destination;
 	}
 	
 	public boolean atTopOrButtom(){
-		if(floor==0 || floor==5)
+		if(floor<=0 || floor>=5)
 			return true;
 		return false;
 	}

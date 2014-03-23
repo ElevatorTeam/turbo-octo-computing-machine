@@ -5,6 +5,7 @@ import org.newdawn.slick.state.*;
 
 public class MenuRender extends MenuUpdate{
 	
+	//don't touch.
 	
 	static int posX = Mouse.getX();
     static int posY = Mouse.getY();
