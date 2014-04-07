@@ -97,7 +97,8 @@ public class ElevatorGame extends BasicGameState{
 		
 		g.drawString("You have " + ElevatorList.size() + " Elevators. Would you like to buy a new one?   BUY", 50, 30);
 		g.drawString("You have " + moneyCount + " dollars.", 50, 55);
-		g.drawString("A new elevator will cost you " + ElevatorList.size()*4 + " dollars.", 300, 55);
+		g.drawString("A new elevator will cost you " + ElevatorList.size()*4 + " dollars." + " A new floor costs 50 dollars.", 300, 55);
+		g.drawString("Buy floor", 900, 25);
 		
 		for(int k=0;k<ElevatorList.size();k++){
 			elevatorImg.draw((k*300)+100-renderLocX,height/6,width/8,height/9*4);
@@ -172,15 +173,24 @@ public class ElevatorGame extends BasicGameState{
 	public void mouseClicked(int button, int x, int y, int clickCount){
 		
 		//This is how you buy a new elevator! 
-		if (button==0){
-			//buying new elevator
-			if(x>550 && x<600)
-				if(y>25 && y<50)
-					if(moneyCount>=ElevatorList.size()*4){
-						moneyCount-=ElevatorList.size()*4;
+		if (button == 0) {
+			// buying new elevator
+			if (x > 550 && x < 600)
+				if (y > 25 && y < 50)
+					if (moneyCount >= ElevatorList.size() * 4) {
+						moneyCount -= ElevatorList.size() * 4;
 						ElevatorList.add(new Elevator());
 					}
-			
+
+			if (x > 900 && x < 1000)
+				if (y > 25 && y < 50)
+					if (moneyCount >= 50){
+						for (int w = 0; w < ElevatorList.size(); w++) {
+							// add one floor to all elevators!
+							ElevatorList.get(w).increaseFloorCount();
+						}
+						moneyCount-=50;
+					}
 		}
 	}
 	

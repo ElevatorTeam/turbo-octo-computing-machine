@@ -17,7 +17,7 @@ public class ElevatorPassengers extends ElevatorControl {
 			for(int z=0; z<nextPassengerLocation.get(floor); z++){
 				if(!ElevatorIsFull()){
 					nextPassengerLocation.set(floor, nextPassengerLocation.get(floor)-1);
-					dropPassengerLocation.set(randInt(0,5), dropPassengerLocation.get(floor)+1);
+					dropPassengerLocation.set(randInt(0,dropPassengerLocation.size()-1), dropPassengerLocation.get(floor)+1);
 					passengerCount++;
 				}
 			}
@@ -32,5 +32,13 @@ public class ElevatorPassengers extends ElevatorControl {
 					}
 			}
 			else System.out.println("floor is greater than zero!");
+		}
+		
+		public int getPassengerCount(){
+			return passengerCount;
+		}
+
+		public boolean ElevatorIsFull(){
+			return(maximumPassengers==passengerCount);
 		}
 }

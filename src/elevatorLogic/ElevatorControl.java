@@ -38,18 +38,10 @@ public class ElevatorControl {
 		return velocity;
 	}
 
-	public int getPassengerCount(){
-		return passengerCount;
-	}
-
-	public boolean ElevatorIsFull(){
-		return(maximumPassengers==passengerCount);
-	}
-
 	public void setPosition(){
 		position+=velocity;
-		if(position>600)
-			position=600;
+		if(position>(dropPassengerLocation.size()-1)*120)
+			position=(dropPassengerLocation.size()-1)*120;
 	}
 
 	public int getPosition(){
@@ -61,9 +53,16 @@ public class ElevatorControl {
 	}
 	
 	public boolean atTopOrButtom(){
-		if(floor<=0 || floor>=5)
+		if(floor<=0 || floor>=(nextPassengerLocation.size()-1))
 			return true;
 		return false;
+	}
+	
+	public void increaseFloorCount(){
+		if(dropPassengerLocation.size()<20){
+			nextPassengerLocation.add(0);
+			dropPassengerLocation.add(0);
+		}
 	}
 
 	public static int randInt(int min, int max) {
