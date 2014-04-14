@@ -22,7 +22,7 @@ public class ElevatorControl {
 	ArrayList<Integer> nextPassengerLocation = new ArrayList<Integer>();
 	ArrayList<Integer> dropPassengerLocation = new ArrayList<Integer>();
 	String passengersOn = "";
-	String PassengersOff = "";
+	String passengersOff = "";
 	
 	public void setFloor(int newFloor){
 		floor=newFloor;
@@ -61,17 +61,30 @@ public class ElevatorControl {
 	}
 	
 	public void increaseFloorCount(){
-		if(dropPassengerLocation.size()<20){
+		if(dropPassengerLocation.size()<15){
 			nextPassengerLocation.add(0);
 			dropPassengerLocation.add(0);
 		}
 	}
 	
 	public String getPassengerList(){
+		passengersOn="";
 		for(int k = 0;k<dropPassengerLocation.size();k++)
 			if(dropPassengerLocation.get(k)>0)
-				passengersOn+=""+k +", ";
-		return "Floors where passengers want to go: " + passengersOn;
+				if(passengersOn.equals(""))
+					 passengersOn+="" + (k+1);
+				else passengersOn+=", "+(k+1);
+		return "Floors to drop off on: \n" + passengersOn;
+	}
+	
+	public String getPeopleList(){
+		passengersOff="";
+		for(int k = 0;k<nextPassengerLocation.size();k++)
+			if(nextPassengerLocation.get(k)>0)
+				if(passengersOff.equals(""))
+					 passengersOff+="" + (k+1);
+				else passengersOff+=", "+(k+1);
+		return "Floors to pick up on: \n" + passengersOff;
 	}
 
 	public static int randInt(int min, int max) {

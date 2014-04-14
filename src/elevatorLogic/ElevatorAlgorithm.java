@@ -48,63 +48,61 @@ public class ElevatorAlgorithm extends ElevatorPassengers{
 		if(prevdirection == 1)//going up
 		{
 			//System.out.println(dropPassengerLocation.get(x));	
-			if(destination<=x && dropPassengerLocation.get(x) > 0)
+			if(destination<=x && dropPassengerLocation.get(x) > 0  && x!=floor)
 			{
 				destination = x;
-				System.out.println("1 passenger up to floor:" + destination);
+				//System.out.println("1 passenger up to floor:" + destination);
 				return;
 			}
-			if(nextPassengerLocation.get(z) > 0)
+			if(nextPassengerLocation.get(z) > 0  && z!=floor)
 			{
 				destination = z;
-				System.out.println("1 People up to floor:" + destination);
+				//System.out.println("1 People up to floor:" + destination);
 				return;
 			}	
-			if(dropPassengerLocation.get(i) > 0)
+			if(dropPassengerLocation.get(i) > 0  && i!=floor)
 			{
 				destination = i;
-				System.out.println("1 passenger down to floor:" + destination);
+				//System.out.println("1 passenger down to floor:" + destination);
 				return;
 			}
-			if(nextPassengerLocation.get(g) > 0)
+			if(nextPassengerLocation.get(g) > 0  && g!=floor)
 			{
 				destination = g;
-				System.out.println("1 people down to floor:" + destination);
+				//System.out.println("1 people down to floor:" + destination);
 				return;
 			}
-			System.out.println("1 nothing:" + getPassengerList() + "destination:" + destination);
+			//System.out.println(getPeopleList() + getPassengerList() + "destination:" + destination);
 			return;	
 		}
 		
 		if(prevdirection == -1)//going down
 		{
-			if(destination>=i && dropPassengerLocation.get(i) > 0)
+			if(destination>=i && dropPassengerLocation.get(i) > 0 && i!=floor)
 			{
 				destination = i;	
-				System.out.println("2 passenger down to floor:" + destination);
+				//System.out.println("2 passenger down to floor:" + destination);
 				return;	
 			}
-			if(nextPassengerLocation.get(g) > 0)
-			{
-				destination = g; //GOT STUCK ON THIS! KEPT RETURNING 0 ON BOTTOM FLOOR
-				//I suggest putting if statements that check to make sure that that letter isn't equal to the current floor
-				// for example, we should add && g!=floor to this if statement and something similar to all the other if statements
-				System.out.println("2 people down to floor:" + destination); 
-				return;
-			}	
-			if(dropPassengerLocation.get(x) > 0)
-			{
-				destination = x;
-				System.out.println("2 passenger up to floor:" + destination);
-				return;
-			}
-			if(nextPassengerLocation.get(z) > 0)
+			if(nextPassengerLocation.get(g) > 0 && g!=floor)
 			{
 				destination = g;
-				System.out.println("2 People up to floor:" + destination);
+				//System.out.println("2 people down to floor:" + destination); 
 				return;
 			}	
-			System.out.println("2 nothing:" + getPassengerList() + "destination:" + destination);
+			if(dropPassengerLocation.get(x) > 0  && x!=floor)
+			{
+				destination = x;
+				//System.out.println("2 passenger up to floor:" + destination);
+				return;
+			}
+			if(nextPassengerLocation.get(z) > 0 && z!=floor)
+			{
+				destination = g;
+				//System.out.println("2 People up to floor:" + destination);
+				return;
+			}	
+			//System.out.println(getPeopleList() + getPassengerList() + "destination:" + destination);
 			return;	
 		}
 	}

@@ -24,7 +24,6 @@ public class ElevatorPassengers extends ElevatorControl {
 					while(floor == randFloor)
 						randFloor = randInt(0,dropPassengerLocation.size()-1);
 					dropPassengerLocation.set(randFloor, dropPassengerLocation.get(floor)+1);
-					passengerCount++;
 				}
 			}
 		}
@@ -34,10 +33,16 @@ public class ElevatorPassengers extends ElevatorControl {
 				if(dropPassengerLocation.get(floor)>0)
 					for(int z=0; z<dropPassengerLocation.get(floor); z++){
 						dropPassengerLocation.set(floor, dropPassengerLocation.get(floor)-1);
-						passengerCount--;
 					}
 			}
 			else System.out.println(floor);
+		}
+		
+		public void setPassengerCount(){
+			passengerCount=0;
+			for(int k = 0;k<dropPassengerLocation.size();k++)
+				if(dropPassengerLocation.get(k)>0)
+					passengerCount+=dropPassengerLocation.get(k);
 		}
 
 		public int getPassengerCount(){
