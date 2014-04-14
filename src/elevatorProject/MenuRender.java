@@ -20,8 +20,9 @@ public class MenuRender extends MenuUpdate{
 		MenuBack.draw(0,0,width,height);
 		g.setFont(font);
 		g.setColor(Color.green);
-		g.drawString("Elevator Simulator 2014", width/3, height/4);
-		g.drawString("Enter Game", width/8, height/3*2);
-		g.drawString("Quit", width/4*3, height/3*2);
+		Start.draw(width/8, height/3*2);
+		Quit.draw(width/4*3, height/3*2);
+		//g.drawString("Enter Game", width/8, height/3*2);
+		//g.drawString("Quit", width/4*3, height/3*2);
 	}
 }
