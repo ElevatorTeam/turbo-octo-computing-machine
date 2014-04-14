@@ -60,6 +60,8 @@ public class ElevatorGame extends BasicGameState{
     static int moneyUpdate;
     static Image buyElevator;
     static Image buyFloor;
+    static Image bottomHud;
+    static Image topHud;
     
 	
 	public ElevatorGame(int state) {
@@ -73,6 +75,8 @@ public class ElevatorGame extends BasicGameState{
 		elevatorImg= new Image("resources/images/Elevator.png");
 		buyElevator= new Image("resources/images/Bewton1.png");
 		buyFloor= new    Image("resources/images/Bewton2.png");
+		bottomHud= new   Image("resources/images/bottomHud.png");
+		topHud= new   Image("resources/images/topHud.png");
 		renderLocX = 0;
 		moneyCount = 0;
 		frameCount = 0;
@@ -84,7 +88,7 @@ public class ElevatorGame extends BasicGameState{
 		System.out.println("elevator list size: " + ElevatorList.size());
 		Font awtFont;
 		try {
-			awtFont = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("game_over.ttf"));
+			awtFont = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("Aero.ttf"));
 			awtFont = awtFont.deriveFont(84f); // set font size
 			font = new TrueTypeFont(awtFont, false);
 		} catch (FontFormatException | IOException e) {e.printStackTrace();}
@@ -115,8 +119,10 @@ public class ElevatorGame extends BasicGameState{
 		g.drawString("You have " + ElevatorList.size() + " Elevators. Would you like to buy a new one?", 50, 30);
 		g.drawString("You have " + moneyCount + " dollars.", 50, 55);
 		g.drawString("A new elevator will cost you " + ElevatorList.size()*4 + " dollars." + " A new floor costs 50 dollars.", 300, 55);
-		buyFloor.draw(900,25);
-		buyElevator.draw(550,25);
+		bottomHud.draw(0,gc.getHeight()/3*2);
+		topHud.draw(0,0);
+		buyFloor.draw(900,15);
+		buyElevator.draw(900,50);
 	}
 	
 	@Override
@@ -181,15 +187,15 @@ public class ElevatorGame extends BasicGameState{
 		//This is how you buy a new elevator! 
 		if (button == 0) {
 			// buying new elevator
-			if (x > 550 && x < 680)
-				if (y > 25 && y < 50)
+			if (x > 900 && x < 1030)
+				if (y > 50 && y < 75)
 					if (moneyCount >= ElevatorList.size() * 4) {
 						moneyCount -= ElevatorList.size() * 4;
 						ElevatorList.add(new Elevator());
 					}
 
 			if (x > 900 && x < 1030)
-				if (y > 25 && y < 50)
+				if (y > 15 && y < 40)
 					if (moneyCount >= 50){
 						for (int w = 0; w < ElevatorList.size(); w++) {
 							// add one floor to all elevators!
