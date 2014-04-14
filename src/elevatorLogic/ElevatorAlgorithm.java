@@ -22,6 +22,10 @@ public class ElevatorAlgorithm extends ElevatorPassengers{
 			setVelocity(-1);
 			prevdirection = -1;	
 		}
+		if(waitCount>0){
+			setVelocity(0);
+			--waitCount;
+		}
 		//System.out.println("destination: " + destination + "floor: " + floor);
 	}
 	
