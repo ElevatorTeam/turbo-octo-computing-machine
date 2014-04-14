@@ -89,7 +89,7 @@ public class ElevatorGame extends BasicGameState{
 		Font awtFont;
 		try {
 			awtFont = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("Aero.ttf"));
-			awtFont = awtFont.deriveFont(84f); // set font size
+			awtFont = awtFont.deriveFont(120f); // set font size
 			font = new TrueTypeFont(awtFont, false);
 		} catch (FontFormatException | IOException e) {e.printStackTrace();}
 	}
@@ -102,7 +102,7 @@ public class ElevatorGame extends BasicGameState{
 			height=gc.getHeight();
 			setWidth=false;
 			g.setFont(font);
-			g.setColor(Color.red);
+			g.setColor(Color.orange);
 		}
 		
 		for(int k=0;k<ElevatorList.size();k++){
@@ -116,13 +116,16 @@ public class ElevatorGame extends BasicGameState{
 			g.drawString("Position:  " + ElevatorList.get(k).getPosition(),(k*480)+100-renderLocX,height/3*2+105);
 		}
 		
-		g.drawString("You have " + ElevatorList.size() + " Elevators. Would you like to buy a new one?", 50, 30);
-		g.drawString("You have " + moneyCount + " dollars.", 50, 55);
-		g.drawString("A new elevator will cost you " + ElevatorList.size()*4 + " dollars." + " A new floor costs 50 dollars.", 300, 55);
-		bottomHud.draw(0,gc.getHeight()/3*2);
+		//g.drawString("You have " + ElevatorList.size() + " Elevators. Would you like to buy a new one?", 50, 30);
+		//g.drawString("You have " + moneyCount + " dollars.", 50, 55);
+		//g.drawString("A new elevator will cost you " + ElevatorList.size()*4 + " dollars." + " A new floor costs 50 dollars.", 300, 55);
+		//bottomHud.draw(0,gc.getHeight()/3*2);
 		topHud.draw(0,0);
 		buyFloor.draw(900,15);
 		buyElevator.draw(900,50);
+		g.drawString("" + moneyCount, 150, 20);
+		//g.drawString("You have " + moneyCount + " dollars.", 50, 55);
+		//g.drawString("A new elevator will cost you " + ElevatorList.size()*4 + " dollars." + " A new floor costs 50 dollars.", 300, 55);
 	}
 	
 	@Override
@@ -147,6 +150,8 @@ public class ElevatorGame extends BasicGameState{
 				ElevatorList.get(q).removePassengers();
 				//picks up anyone who is on this floor.
 				ElevatorList.get(q).pickUpPassengers();
+				//sets direction to head.
+				ElevatorList.get(q).setDestination();
 				//This is the algorithm. This is what tells the elevator where to go.
 				ElevatorList.get(q).runAlgorithm();
 			}

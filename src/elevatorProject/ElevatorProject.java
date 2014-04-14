@@ -27,7 +27,7 @@ public class ElevatorProject extends StateBasedGame{
 	public static void main(String[] args){
 		try{
 			appgc = new AppGameContainer(new ElevatorProject(gamename));
-			appgc.setDisplayMode(appgc.getScreenWidth()/3*2, appgc.getScreenHeight()/3*2, false);
+			appgc.setDisplayMode(1600/3*2, 900/3*2, false);
 			appgc.setShowFPS(false);
 			appgc.setTargetFrameRate(60);
 			appgc.start();

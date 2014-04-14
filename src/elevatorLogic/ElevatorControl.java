@@ -21,6 +21,8 @@ public class ElevatorControl {
 	//On the other hand, dropPassengerLocation is the floor people inside the elevator want to be dropped off at.
 	ArrayList<Integer> nextPassengerLocation = new ArrayList<Integer>();
 	ArrayList<Integer> dropPassengerLocation = new ArrayList<Integer>();
+	String passengersOn = "";
+	String PassengersOff = "";
 	
 	public void setFloor(int newFloor){
 		floor=newFloor;
@@ -63,6 +65,13 @@ public class ElevatorControl {
 			nextPassengerLocation.add(0);
 			dropPassengerLocation.add(0);
 		}
+	}
+	
+	public String getPassengerList(){
+		for(int k = 0;k<dropPassengerLocation.size();k++)
+			if(dropPassengerLocation.get(k)>0)
+				passengersOn+=""+k +", ";
+		return "Floors where passengers want to go: " + passengersOn;
 	}
 
 	public static int randInt(int min, int max) {

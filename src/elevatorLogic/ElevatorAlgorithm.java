@@ -8,8 +8,10 @@ public class ElevatorAlgorithm extends ElevatorPassengers{
 	//this is the class that controls the direction the elevator is going.
 	//runAlgorithm shall be the function that STARTS the algoritm on finding which way the elevator should go.
 	public void runAlgorithm(){
-		if(destination==floor)
+		if(destination==floor){
+			setDestination();
 			setVelocity(0);
+		}
 		if(destination>floor)
 		{	
 			setVelocity(1);
@@ -19,7 +21,7 @@ public class ElevatorAlgorithm extends ElevatorPassengers{
 		{
 			setVelocity(-1);
 			prevdirection = -1;	
-		}	
+		}
 		//System.out.println("destination: " + destination + "floor: " + floor);
 	}
 	
@@ -29,69 +31,80 @@ public class ElevatorAlgorithm extends ElevatorPassengers{
 			destination=analyzeWaiters();	
 		if(analyzePassengers()!=-1)
 			destination=analyzePassengers();	
-*/
-		int i = 0;
-		int x = 0;
-		int g = 0;
-		int z = 0;		
-		for(i = 0; i<dropPassengerLocation.size() && dropPassengerLocation.get(i) == 0; i++);//lowest level with dropoff requests 
-		System.out.println("dropoffmin: " + i);
+	 */
+		int i = 0; //lowest floor for dropping off
+		int x = 0; //highest floor for dropping off
+		int g = 0; //lowest floor for picking up
+		int z = 0; //highest floor for picking up	
+		for(i = 0; i<dropPassengerLocation.size()-1 && dropPassengerLocation.get(i) == 0; i++);//lowest level with dropoff requests 
+		//System.out.println("dropoffmin: " + i);
 		for(x = dropPassengerLocation.size()-1; x>0 && dropPassengerLocation.get(x) == 0; x--);//highest level with dropoff requests	
-		System.out.println("dropoffmax: " + x);	
-		for(g = 0; g<nextPassengerLocation.size() && nextPassengerLocation.get(g) == 0; g++);//lowest level that has pickup requests.
-		System.out.println("pickupmin: " + g);	
+		//System.out.println("dropoffmax: " + x);	
+		for(g = 0; g<nextPassengerLocation.size()-1 && nextPassengerLocation.get(g) == 0; g++);//lowest level that has pickup requests.
+		//System.out.println("pickupmin: " + g);	
 		for(z = nextPassengerLocation.size()-1; z>0 && nextPassengerLocation.get(z) == 0; z--);//highest level with pickup requests
-		System.out.println("pickupmax: " + z);	
+		//System.out.println("pickupmax: " + z);	
 		
 		if(prevdirection == 1)//going up
 		{
-			System.out.println(dropPassengerLocation.get(x));	
+			//System.out.println(dropPassengerLocation.get(x));	
 			if(destination<=x && dropPassengerLocation.get(x) > 0)
 			{
-				System.out.println("1");	
-				destination = x;	
-				return;	
+				destination = x;
+				System.out.println("1 passenger up to floor:" + destination);
+				return;
 			}
 			if(nextPassengerLocation.get(z) > 0)
 			{
 				destination = z;
+				System.out.println("1 People up to floor:" + destination);
 				return;
 			}	
 			if(dropPassengerLocation.get(i) > 0)
 			{
 				destination = i;
+				System.out.println("1 passenger down to floor:" + destination);
 				return;
 			}
 			if(nextPassengerLocation.get(g) > 0)
 			{
 				destination = g;
+				System.out.println("1 people down to floor:" + destination);
 				return;
-			}	
+			}
+			System.out.println("1 nothing:" + getPassengerList() + "destination:" + destination);
 			return;	
 		}
 		
 		if(prevdirection == -1)//going down
 		{
-			if(destination>i && dropPassengerLocation.get(i) > 0)
+			if(destination>=i && dropPassengerLocation.get(i) > 0)
 			{
 				destination = i;	
+				System.out.println("2 passenger down to floor:" + destination);
 				return;	
 			}
 			if(nextPassengerLocation.get(g) > 0)
 			{
-				destination = g;
+				destination = g; //GOT STUCK ON THIS! KEPT RETURNING 0 ON BOTTOM FLOOR
+				//I suggest putting if statements that check to make sure that that letter isn't equal to the current floor
+				// for example, we should add && g!=floor to this if statement and something similar to all the other if statements
+				System.out.println("2 people down to floor:" + destination); 
 				return;
 			}	
 			if(dropPassengerLocation.get(x) > 0)
 			{
 				destination = x;
+				System.out.println("2 passenger up to floor:" + destination);
 				return;
 			}
 			if(nextPassengerLocation.get(z) > 0)
 			{
 				destination = g;
+				System.out.println("2 People up to floor:" + destination);
 				return;
 			}	
+			System.out.println("2 nothing:" + getPassengerList() + "destination:" + destination);
 			return;	
 		}
 	}

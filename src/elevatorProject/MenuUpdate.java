@@ -12,7 +12,7 @@ public class MenuUpdate extends MenuClick {
 	public void menuUpdate(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
 		//If the Mouse is grabbed, you can't see it. Useful when outside of menus, but since this IS a menu...
 		if(playTheme ==true){
-			theme.playAsSoundEffect(1.0f, 1.0f, false);
+			theme.playAsSoundEffect(1.0f, 1.0f, true);
 			playTheme=false;
 			Mouse.setGrabbed(false);
 			}
