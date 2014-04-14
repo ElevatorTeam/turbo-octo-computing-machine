@@ -42,8 +42,8 @@ public class Elevator extends ElevatorAlgorithm {
 	
 	//Adds one person to a random floor 25% of the time. Curently set to be called once a second insinde the ElevatorGame class.
 	public void addRandom(){
-		if(randInt(0,20)>15){
-			chosenFloor= randInt(0, 5);
+		if(randInt(0,20)>18){
+			chosenFloor= randInt(0, dropPassengerLocation.size()-1);
 			nextPassengerLocation.set(chosenFloor,chosenFloor+1);
 			destination=chosenFloor;
 		}

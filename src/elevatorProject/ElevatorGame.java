@@ -33,7 +33,7 @@ import elevatorLogic.*;
 //Therefore to make a button in the main menu send you to a difficulty mode where the initial passengerRate is once every 10 seconds,
 // you would make it so inside the menu, after clicking on the menu item, you do:
 //ElevatorGame.setPassengerCreationRate(10.0);
-//sbg.enterState(ElevatorProject.elevatoProgram);Za
+//sbg.enterState(ElevatorProject.elevatoProgram);
 
 //render is called 60 times a second, and update is called inbetween each of those. To keep things clean, it is a REALLY good idea to just have
 //render and update call a different class that controls both. In fact, for the menu, the render and update section has 4 different classes, to control
@@ -58,6 +58,9 @@ public class ElevatorGame extends BasicGameState{
     static int moneyCount;
     static int frameCount;
     static int moneyUpdate;
+    static Image buyElevator;
+    static Image buyFloor;
+    
 	
 	public ElevatorGame(int state) {
 		 this.state = state;
@@ -66,7 +69,10 @@ public class ElevatorGame extends BasicGameState{
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
+		Floors.initImages();
 		elevatorImg= new Image("resources/images/Elevator.png");
+		buyElevator= new Image("resources/images/Bewton1.png");
+		buyFloor= new    Image("resources/images/Bewton2.png");
 		renderLocX = 0;
 		moneyCount = 0;
 		frameCount = 0;
@@ -95,27 +101,28 @@ public class ElevatorGame extends BasicGameState{
 			g.setColor(Color.red);
 		}
 		
-		g.drawString("You have " + ElevatorList.size() + " Elevators. Would you like to buy a new one?   BUY", 50, 30);
-		g.drawString("You have " + moneyCount + " dollars.", 50, 55);
-		g.drawString("A new elevator will cost you " + ElevatorList.size()*4 + " dollars." + " A new floor costs 50 dollars.", 300, 55);
-		g.drawString("Buy floor", 900, 25);
-		
 		for(int k=0;k<ElevatorList.size();k++){
-			elevatorImg.draw((k*300)+100-renderLocX,height/6,width/8,height/9*4);
-			g.drawString("floor " + (ElevatorList.get(k).getFloor() + 1), (k*300)+135-renderLocX,height/6+35);
-			g.drawString("passengers: " + ElevatorList.get(k).getPassengerCount(),(k*300)+100-renderLocX,height/3*2);
-			g.drawString("next floor:  " + (ElevatorList.get(k).getNextFloor() + 1),(k*300)+100-renderLocX,height/3*2+35);
-			g.drawString("Velocity:  " + ElevatorList.get(k).getVelocity(),(k*300)+100-renderLocX,height/3*2+70);
-			g.drawString("Position:  " + ElevatorList.get(k).getPosition(),(k*300)+100-renderLocX,height/3*2+105);
+			for(int z=0;z<Floors.floorList.size();z++)
+				//ElevatorList.get(k).getFloorImages().get(z).draw(k*482-renderLocX, (int) (ElevatorList.get(k).getPosition()*4.008333) - 481*z - 116);
+				Floors.floorList.get(z).draw(k*482-renderLocX, (int) (ElevatorList.get(k).getPosition()*4.0166667) - 482*z - 116);
+			elevatorImg.draw((k*480)+100-renderLocX,height/6,width/8,height/9*4);
+			g.drawString("floor " + (ElevatorList.get(k).getFloor() + 1), (k*480)+118-renderLocX,height/6+18);
+			g.drawString("passengers: " + ElevatorList.get(k).getPassengerCount(),(k*480)+100-renderLocX,height/3*2);
+			g.drawString("next floor:  " + (ElevatorList.get(k).getNextFloor() + 1),(k*480)+100-renderLocX,height/3*2+35);
+			g.drawString("Velocity:  " + ElevatorList.get(k).getVelocity(),(k*480)+100-renderLocX,height/3*2+70);
+			g.drawString("Position:  " + ElevatorList.get(k).getPosition(),(k*480)+100-renderLocX,height/3*2+105);
 		}
 		
+		g.drawString("You have " + ElevatorList.size() + " Elevators. Would you like to buy a new one?", 50, 30);
+		g.drawString("You have " + moneyCount + " dollars.", 50, 55);
+		g.drawString("A new elevator will cost you " + ElevatorList.size()*4 + " dollars." + " A new floor costs 50 dollars.", 300, 55);
+		buyFloor.draw(900,25);
+		buyElevator.draw(550,25);
 	}
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException{
-		
-		
 		//
 		//
 		//this is called 60 times a second, so everything happens at least once per frame
@@ -149,18 +156,21 @@ public class ElevatorGame extends BasicGameState{
 		
 		moneyUpdate=ElevatorList.size()/2;
 		
-		if(frameCount%60==0){
+		if(frameCount%60==0 && moneyCount<1000){
 		 moneyCount+=moneyUpdate;
 		}
+		
+		if(moneyCount>999)
+			moneyCount=999;
 	
 		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
 			if(renderLocX>0)
-				renderLocX-=4;
+				renderLocX-=10;
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
-			if(renderLocX<(ElevatorList.size()-3)*300-100)
-				renderLocX+=4;
+			if(renderLocX<(ElevatorList.size()-2)*500-150)
+				renderLocX+=10;
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
@@ -175,19 +185,20 @@ public class ElevatorGame extends BasicGameState{
 		//This is how you buy a new elevator! 
 		if (button == 0) {
 			// buying new elevator
-			if (x > 550 && x < 600)
+			if (x > 550 && x < 680)
 				if (y > 25 && y < 50)
 					if (moneyCount >= ElevatorList.size() * 4) {
 						moneyCount -= ElevatorList.size() * 4;
 						ElevatorList.add(new Elevator());
 					}
 
-			if (x > 900 && x < 1000)
+			if (x > 900 && x < 1030)
 				if (y > 25 && y < 50)
 					if (moneyCount >= 50){
 						for (int w = 0; w < ElevatorList.size(); w++) {
 							// add one floor to all elevators!
 							ElevatorList.get(w).increaseFloorCount();
+							Floors.addFloor();
 						}
 						moneyCount-=50;
 					}

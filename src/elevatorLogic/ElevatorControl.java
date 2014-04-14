@@ -3,14 +3,14 @@ package elevatorLogic;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.newdawn.slick.Image;
+
 public class ElevatorControl {
 	
 	//This class really doesn't DO anything. It is the same as the MenuCommands class, it is here to create stuff.
 	//Most of the functions revolve around getting or setting a variable.
 	int floor;
 	int velocity;
-	int passengerCount;
-	int maximumPassengers;
 	int position;
 	int destination = 0;
 	int chosenFloor;

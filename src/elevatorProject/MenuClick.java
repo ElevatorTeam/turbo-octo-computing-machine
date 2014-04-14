@@ -13,8 +13,7 @@ public class MenuClick extends MenuCommands {
 	StateBasedGame sbg;
 	
 	public void MainClick(int button, int x, int y) throws SlickException{
-		
-		if(x>(width/8) && y>(height/3*2) && x<(width/3) && y<(height/5*4) )
+		if(x>(width/8) && y>(height/3*2) && x<(width/3) && y<(height/5*4))
 	     {
 	         if(button==0){
 	        	 sbg.enterState(ElevatorProject.elevatorProgram);

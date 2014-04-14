@@ -11,5 +11,7 @@ public class ElevatorAlgorithm extends ElevatorPassengers{
 			setVelocity(1);
 		if(destination<floor)
 			setVelocity(-1);
+		if(position<-1)
+			setVelocity(1);
 	}
 }
