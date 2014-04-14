@@ -139,7 +139,7 @@ public class ElevatorGame extends BasicGameState{
 			ElevatorList.get(q).setPosition();
 			
 			//once a second, a new person is sometimes added to a random floor per elevator
-			if(frameCount%90==0 || frameCount <=3)
+			if(frameCount%120==0 || frameCount <=3)
 				ElevatorList.get(q).addRandom();
 			
 			//if the elevator is sitting on a floor, so it can open its doors and take passengers.
@@ -190,10 +190,8 @@ public class ElevatorGame extends BasicGameState{
 	}
 	
 	public void mouseClicked(int button, int x, int y, int clickCount){
-		
-		//This is how you buy a new elevator! 
 		if (button == 0) {
-			// buying new elevator
+			///This buys a new elevator
 			if (x > 900 && x < 1030)
 				if (y > 50 && y < 75)
 					if (moneyCount >= ElevatorList.size() * 4) {
@@ -201,11 +199,11 @@ public class ElevatorGame extends BasicGameState{
 						ElevatorList.add(new Elevator());
 					}
 
+			//This buys a new floor
 			if (x > 900 && x < 1030)
 				if (y > 15 && y < 40)
 					if (moneyCount >= 50){
 						for (int w = 0; w < ElevatorList.size(); w++) {
-							// add one floor to all elevators!
 							ElevatorList.get(w).increaseFloorCount();
 						}
 						if(Floors.floorList.size()<15)
