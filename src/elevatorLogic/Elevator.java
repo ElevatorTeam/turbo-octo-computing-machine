@@ -11,6 +11,7 @@ public class Elevator extends ElevatorAlgorithm {
 	public Elevator(){
 		floor = 0;
 		velocity = 0;
+		prevdirection = 1;	
 		passengerCount=0;
 		maximumPassengers=10;
 		position=0;
@@ -46,7 +47,7 @@ public class Elevator extends ElevatorAlgorithm {
 		if(randInt(0,20)>15){
 			chosenFloor= randInt(0, nextPassengerLocation.size()-1);
 			nextPassengerLocation.set(chosenFloor,nextPassengerLocation.get(chosenFloor)+randInt(1,4));
-			destination=chosenFloor;
+			setDestination();
 		}
 	}
 }
