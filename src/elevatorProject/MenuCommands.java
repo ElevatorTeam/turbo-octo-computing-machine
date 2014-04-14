@@ -25,18 +25,9 @@ public class MenuCommands {
 	boolean playTheme = true;
     
     public void initMain() throws SlickException{
-		//This sets the font font
-		try {
-			InputStream inputStream	= ResourceLoader.getResourceAsStream("game_over.ttf");
 			MenuBack = new Image("resources/images/MenuScreen.png");
 			Start = new Image("resources/images/Start.png");
 			Quit = new Image("resources/images/Quit.png");
-			Font awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
-			awtFont = awtFont.deriveFont(84f); // set font size
-			font = new TrueTypeFont(awtFont, false);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
 		//Use the code below for a menu theme!
 		try {

@@ -89,7 +89,7 @@ public class ElevatorGame extends BasicGameState{
 		Font awtFont;
 		try {
 			awtFont = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("Aero.ttf"));
-			awtFont = awtFont.deriveFont(84f); // set font size
+			awtFont = awtFont.deriveFont(120f); // set font size
 			font = new TrueTypeFont(awtFont, false);
 		} catch (FontFormatException | IOException e) {e.printStackTrace();}
 	}
@@ -102,27 +102,30 @@ public class ElevatorGame extends BasicGameState{
 			height=gc.getHeight();
 			setWidth=false;
 			g.setFont(font);
-			g.setColor(Color.red);
+			g.setColor(Color.orange);
 		}
 		
 		for(int k=0;k<ElevatorList.size();k++){
 			for(int z=0;z<Floors.floorList.size();z++)
 				Floors.floorList.get(z).draw(k*482-renderLocX, (int) (ElevatorList.get(k).getPosition()*4.0166667) - 482*z - 116);
 			elevatorImg.draw((k*480)+100-renderLocX,height/6,width/8,height/9*4);
-			g.drawString("floor " + (ElevatorList.get(k).getFloor() + 1), (k*480)+118-renderLocX,height/6+18);
-			g.drawString("passengers: " + ElevatorList.get(k).getPassengerCount(),(k*480)+100-renderLocX,height/3*2);
-			g.drawString("next floor:  " + (ElevatorList.get(k).getNextFloor() + 1),(k*480)+100-renderLocX,height/3*2+35);
-			g.drawString("Velocity:  " + ElevatorList.get(k).getVelocity(),(k*480)+100-renderLocX,height/3*2+70);
-			g.drawString("Position:  " + ElevatorList.get(k).getPosition(),(k*480)+100-renderLocX,height/3*2+105);
+			g.drawString("" + (ElevatorList.get(k).getFloor() + 1), (k*480)+130-renderLocX,height/6+18);
+			g.drawString("next:" + (ElevatorList.get(k).getNextFloor() + 1), (k*480)+170-renderLocX,height/6+18);
 		}
 		
-		g.drawString("You have " + ElevatorList.size() + " Elevators. Would you like to buy a new one?", 50, 30);
-		g.drawString("You have " + moneyCount + " dollars.", 50, 55);
-		g.drawString("A new elevator will cost you " + ElevatorList.size()*4 + " dollars." + " A new floor costs 50 dollars.", 300, 55);
 		bottomHud.draw(0,gc.getHeight()/3*2);
 		topHud.draw(0,0);
 		buyFloor.draw(900,15);
 		buyElevator.draw(900,50);
+		g.drawString("" + moneyCount, 150, 20);
+		g.drawString("" + ElevatorList.size()*4, 245, 55);
+		g.drawString("" + ElevatorList.size(), 670, 20);
+		g.drawString("" + Floors.floorList.size(), 620, 60);
+		for(int k=0;k<ElevatorList.size();k++){
+			g.drawString(ElevatorList.get(k).getPassengerList(), (k*480)+100-renderLocX,height/4*3);
+			g.drawString(ElevatorList.get(k).getPeopleList(), (k*480)+100-renderLocX,height/4*3+50);
+			g.drawString("Passenger Count: " + ElevatorList.get(k).getPassengerCount(), (k*480)+100-renderLocX,height/4*3+100);
+		}
 	}
 	
 	@Override
@@ -136,7 +139,7 @@ public class ElevatorGame extends BasicGameState{
 			ElevatorList.get(q).setPosition();
 			
 			//once a second, a new person is sometimes added to a random floor per elevator
-			if(frameCount%120==0 || frameCount <=3)
+			if(frameCount%90==0 || frameCount <=3)
 				ElevatorList.get(q).addRandom();
 			
 			//if the elevator is sitting on a floor, so it can open its doors and take passengers.
@@ -147,8 +150,12 @@ public class ElevatorGame extends BasicGameState{
 				ElevatorList.get(q).removePassengers();
 				//picks up anyone who is on this floor.
 				ElevatorList.get(q).pickUpPassengers();
+				//sets direction to head.
+				ElevatorList.get(q).setDestination();
 				//This is the algorithm. This is what tells the elevator where to go.
 				ElevatorList.get(q).runAlgorithm();
+				//This sets how many passengers are on board the elevator
+				ElevatorList.get(q).setPassengerCount();
 			}
 		}
 		
@@ -201,7 +208,8 @@ public class ElevatorGame extends BasicGameState{
 							// add one floor to all elevators!
 							ElevatorList.get(w).increaseFloorCount();
 						}
-						Floors.addFloor();
+						if(Floors.floorList.size()<15)
+							Floors.addFloor();
 						moneyCount-=50;
 					}
 		}
