@@ -103,7 +103,6 @@ public class ElevatorGame extends BasicGameState{
 		
 		for(int k=0;k<ElevatorList.size();k++){
 			for(int z=0;z<Floors.floorList.size();z++)
-				//ElevatorList.get(k).getFloorImages().get(z).draw(k*482-renderLocX, (int) (ElevatorList.get(k).getPosition()*4.008333) - 481*z - 116);
 				Floors.floorList.get(z).draw(k*482-renderLocX, (int) (ElevatorList.get(k).getPosition()*4.0166667) - 482*z - 116);
 			elevatorImg.draw((k*480)+100-renderLocX,height/6,width/8,height/9*4);
 			g.drawString("floor " + (ElevatorList.get(k).getFloor() + 1), (k*480)+118-renderLocX,height/6+18);
@@ -123,8 +122,6 @@ public class ElevatorGame extends BasicGameState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException{
-		//
-		//
 		//this is called 60 times a second, so everything happens at least once per frame
 		
 		//sets everything that happens in each elevator
@@ -133,7 +130,7 @@ public class ElevatorGame extends BasicGameState{
 			ElevatorList.get(q).setPosition();
 			
 			//once a second, a new person is sometimes added to a random floor per elevator
-			if(frameCount%60==0)
+			if(frameCount%120==0 || frameCount <=3)
 				ElevatorList.get(q).addRandom();
 			
 			//if the elevator is sitting on a floor, so it can open its doors and take passengers.
@@ -145,8 +142,7 @@ public class ElevatorGame extends BasicGameState{
 				//picks up anyone who is on this floor.
 				ElevatorList.get(q).pickUpPassengers();
 				//This is the algorithm. This is what tells the elevator where to go.
-				if(ElevatorList.get(q).reachedDestination() || frameCount<2 || ElevatorList.get(q).atTopOrButtom())
-					ElevatorList.get(q).runAlgorithm();
+				ElevatorList.get(q).runAlgorithm();
 			}
 		}
 		
@@ -162,7 +158,7 @@ public class ElevatorGame extends BasicGameState{
 		
 		if(moneyCount>999)
 			moneyCount=999;
-	
+		
 		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
 			if(renderLocX>0)
 				renderLocX-=10;
@@ -198,8 +194,8 @@ public class ElevatorGame extends BasicGameState{
 						for (int w = 0; w < ElevatorList.size(); w++) {
 							// add one floor to all elevators!
 							ElevatorList.get(w).increaseFloorCount();
-							Floors.addFloor();
 						}
+						Floors.addFloor();
 						moneyCount-=50;
 					}
 		}
