@@ -8,17 +8,15 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 import org.newdawn.slick.util.ResourceLoader;
-
 import elevatorLogic.*;
 
-//THIS IS THE ONLY CLASS IN THIS PACKAGE YOU SHOULD REALLY BE TOUCHING AT ALL. This is the render class and update class
-//for the game half of this project.
-//The elevatorLogic package is the second half, which is what actually touches the elevators.
+/*THIS IS THE ONLY CLASS IN THIS PACKAGE YOU SHOULD REALLY BE TOUCHING AT ALL. This is the render class and update class
+for the game half of this project.
+The elevatorLogic package is the second half, which is what actually touches the elevators.*/
 
 /*//init is actual called when this class is created inside of ElevatorProject, our main class.
 // The reason why, is because each "state" of the game, like the main menu, and the elevator section itself only exists once.
@@ -26,8 +24,8 @@ import elevatorLogic.*;
 //For example, if we want to have the main menu control whether the game produces a new person every 5 seconds or every 20 seconds, you must make
 //a static method, for example "public static void setPassengerCreationRate(double rate){PassengerCreationRate=rate;} or something like that.
 
-//To enter a new state (menus, gameModes, etc), type in sbg.enterState(ElevatorProject.elevatoProgram); inside of the update functon 
-//ElevatorProject being the name of our mainclass, and elevatorProgram being the name of that state. 
+//To enter a new state (menus, gameModes, etc), type in sbg.enterState(ElevatorProject.elevatoProgram); inside of the update functon
+//ElevatorProject being the name of our mainclass, and elevatorProgram being the name of that state.
 //"startMenu" would be the start menu state.
 
 //Therefore to make a button in the main menu send you to a difficulty mode where the initial passengerRate is once every 10 seconds,
@@ -60,6 +58,8 @@ public class ElevatorGame extends BasicGameState{
     static int moneyUpdate;
     static Image buyElevator;
     static Image buyFloor;
+    static Image topHud;
+    static Image bottomHud;
     
 	
 	public ElevatorGame(int state) {
@@ -72,7 +72,9 @@ public class ElevatorGame extends BasicGameState{
 		Floors.initImages();
 		elevatorImg= new Image("resources/images/Elevator.png");
 		buyElevator= new Image("resources/images/Bewton1.png");
-		buyFloor= new    Image("resources/images/Bewton2.png");
+		buyFloor  =  new    Image("resources/images/Bewton2.png");
+		topHud    =  new    Image("resources/images/topHud.png");
+		bottomHud =  new    Image("resources/images/bottomHud.png");
 		renderLocX = 0;
 		moneyCount = 0;
 		frameCount = 0;
@@ -115,8 +117,11 @@ public class ElevatorGame extends BasicGameState{
 		g.drawString("You have " + ElevatorList.size() + " Elevators. Would you like to buy a new one?", 50, 30);
 		g.drawString("You have " + moneyCount + " dollars.", 50, 55);
 		g.drawString("A new elevator will cost you " + ElevatorList.size()*4 + " dollars." + " A new floor costs 50 dollars.", 300, 55);
-		buyFloor.draw(900,25);
-		buyElevator.draw(550,25);
+		//buyFloor.draw(900,25);
+		//buyElevator.draw(550,25);
+		topHud.draw(0,0);
+		bottomHud.draw(0, gc.getHeight()/3*2+100);
+		bottomHud.draw(0, gc.getHeight()/3*2);
 	}
 	
 	@Override
