@@ -5,7 +5,7 @@ public class ElevatorPassengers extends ElevatorControl {
 	int passengerCount;
 	int maximumPassengers;
 	
-	//Everything below here controls the passengers
+		//Everything below here controls the passengers
 		public void pickUpPassengers(){
 			if(floor>=0){
 				if(nextPassengerLocation.get(floor)>0)
@@ -20,7 +20,10 @@ public class ElevatorPassengers extends ElevatorControl {
 			for(int z=0; z<nextPassengerLocation.get(floor); z++){
 				if(!ElevatorIsFull()){
 					nextPassengerLocation.set(floor, nextPassengerLocation.get(floor)-1);
-					dropPassengerLocation.set(randInt(0,dropPassengerLocation.size()-1), dropPassengerLocation.get(floor)+1);
+					int randFloor = floor;
+					while(floor == randFloor)
+						randFloor = randInt(0,dropPassengerLocation.size()-1);
+					dropPassengerLocation.set(randFloor, dropPassengerLocation.get(floor)+1);
 					passengerCount++;
 				}
 			}

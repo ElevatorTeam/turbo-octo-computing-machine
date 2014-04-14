@@ -34,7 +34,7 @@ public class Floors {
 	}
 	
 	public static void addFloor(){
-		floorList.add(floorList.size()-2,floorGet());
+		floorList.add(floorList.size()-2, floorGet());
 	}
 
 	public static Image floorGet(){
