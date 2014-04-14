@@ -4,6 +4,7 @@ public class ElevatorPassengers extends ElevatorControl {
 	
 	int passengerCount;
 	int maximumPassengers;
+	int waitCount = 0;
 	
 		//Everything below here controls the passengers
 		public void pickUpPassengers(){
@@ -24,6 +25,7 @@ public class ElevatorPassengers extends ElevatorControl {
 					while(floor == randFloor)
 						randFloor = randInt(0,dropPassengerLocation.size()-1);
 					dropPassengerLocation.set(randFloor, dropPassengerLocation.get(floor)+1);
+					waitCount = 100;
 				}
 			}
 		}
@@ -33,6 +35,7 @@ public class ElevatorPassengers extends ElevatorControl {
 				if(dropPassengerLocation.get(floor)>0)
 					for(int z=0; z<dropPassengerLocation.get(floor); z++){
 						dropPassengerLocation.set(floor, dropPassengerLocation.get(floor)-1);
+						waitCount = 100;
 					}
 			}
 			else System.out.println(floor);
