@@ -14,6 +14,7 @@ public class ElevatorControl {
 	int position;
 	int destination = 0;
 	int chosenFloor;
+	int wait = 0;
 	
 	//These 2 ArrayLists are the most important objects in all of the elevator classes.
 	//The "nextPassengerLocation" is the amount of people standing outside of the elevators on each floor.
