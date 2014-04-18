@@ -114,9 +114,13 @@ public class ElevatorGame extends BasicGameState{
 		for(int k=0;k<ElevatorList.size();k++){
 			for(int z=0;z<Floors.floorList.size();z++)
 				Floors.floorList.get(z).draw(k*482-renderLocX, (int) (ElevatorList.get(k).getPosition()*4.0166667) - 482*z - 116);
-			elevatorImg.draw((k*480)+100-renderLocX,height/6,width/8,height/9*4);
-			g.drawString("" + (ElevatorList.get(k).getFloor() + 1), (k*480)+130-renderLocX,height/6+18);
-			g.drawString("" + (ElevatorList.get(k).getNextFloor() + 1), (k*480)+190-renderLocX,height/6+18);
+			elevatorImg.draw((k*482)+170-renderLocX,height/6,width/8,height/9*4);
+			panel.draw((k*482)+192-renderLocX,height/6+60);
+			panelDraw((k*482)+196-renderLocX,height/6+65, g, k, gc);
+			door1.draw((k*482)+170-renderLocX-ElevatorList.get(k).getDoors(),height/6+50,width/16,height/9*4-50);
+			door2.draw((k*482)+237-renderLocX+ElevatorList.get(k).getDoors(),height/6+50,width/16,height/9*4-50);
+			g.drawString("" + (ElevatorList.get(k).getFloor() + 1), (k*480)+200-renderLocX,height/6+18);
+			g.drawString("" + (ElevatorList.get(k).getNextFloor() + 1), (k*480)+260-renderLocX,height/6+18);
 		}
 		
 		bottomHud.draw(0,gc.getHeight()/3*2);
