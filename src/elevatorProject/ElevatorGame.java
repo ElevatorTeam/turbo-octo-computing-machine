@@ -166,7 +166,7 @@ public class ElevatorGame extends BasicGameState{
 			ElevatorList.get(q).setPosition();
 			
 			//once a second, a new person is sometimes added to a random floor per elevator
-			if(frameCount%120==0 || frameCount <=3)
+			if(frameCount%120==0 || frameCount <=5)
 				ElevatorList.get(q).addRandom();
 			
 			//if the elevator is sitting on a floor, so it can open its doors and take passengers.
