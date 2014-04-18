@@ -62,6 +62,9 @@ public class ElevatorGame extends BasicGameState{
     static Image buyFloor;
     static Image bottomHud;
     static Image topHud;
+    static Image door1;
+    static Image door2;
+    static Image panel;
     
 	
 	public ElevatorGame(int state) {
@@ -77,6 +80,9 @@ public class ElevatorGame extends BasicGameState{
 		buyFloor= new    Image("resources/images/Bewton2.png");
 		bottomHud= new   Image("resources/images/bottomHud.png");
 		topHud= new   Image("resources/images/topHud.png");
+		door1= new   Image("resources/images/door1.png");
+		door2= new   Image("resources/images/door2.png");
+		panel= new Image("resources/images/panel.png");
 		renderLocX = 0;
 		moneyCount = 0;
 		frameCount = 0;
@@ -108,9 +114,13 @@ public class ElevatorGame extends BasicGameState{
 		for(int k=0;k<ElevatorList.size();k++){
 			for(int z=0;z<Floors.floorList.size();z++)
 				Floors.floorList.get(z).draw(k*482-renderLocX, (int) (ElevatorList.get(k).getPosition()*4.0166667) - 482*z - 116);
-			elevatorImg.draw((k*480)+100-renderLocX,height/6,width/8,height/9*4);
-			g.drawString("" + (ElevatorList.get(k).getFloor() + 1), (k*480)+130-renderLocX,height/6+18);
-			g.drawString("next:" + (ElevatorList.get(k).getNextFloor() + 1), (k*480)+170-renderLocX,height/6+18);
+			elevatorImg.draw((k*482)+200-renderLocX,height/6,width/8,height/9*4);
+			panel.draw((k*482)+222-renderLocX,height/6+60);
+			panelDraw((k*482)+226-renderLocX,height/6+65, g, k, gc);
+			door1.draw((k*482)+200-renderLocX-ElevatorList.get(k).getDoors(),height/6+50,width/16,height/9*4-50);
+			door2.draw((k*482)+267-renderLocX+ElevatorList.get(k).getDoors(),height/6+50,width/16,height/9*4-50);
+			g.drawString("" + (ElevatorList.get(k).getFloor() + 1), (k*482)+230-renderLocX,height/6+18);
+			g.drawString("next:" + (ElevatorList.get(k).getNextFloor() + 1), (k*482)+270-renderLocX,height/6+18);
 		}
 		
 		bottomHud.draw(0,gc.getHeight()/3*2);
@@ -128,6 +138,23 @@ public class ElevatorGame extends BasicGameState{
 		}
 	}
 	
+	public void panelDraw(int X, int Y, Graphics g, int k, GameContainer gc) {
+		int number=0;
+		g.setColor(Color.gray);
+		for(int row=1;row<=5;row++){
+			for(int col=1;col<=3;col++){
+				if(k<Floors.floorList.size() && (number)<Floors.floorList.size())
+					if(ElevatorList.get(k).getPanelNumbers().get(number))
+						g.setColor(Color.orange);
+					if((number)<Floors.floorList.size())
+						g.drawString(""+ (number+1), X+(30*(col-1)), Y+(30*(row-1)));
+					g.setColor(Color.gray);
+				number++;
+			}
+		}
+		g.setColor(Color.orange);
+	}
+
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException{
@@ -163,9 +190,9 @@ public class ElevatorGame extends BasicGameState{
 		//
 		//
 		
-		moneyUpdate=ElevatorList.size()/2;
+		moneyUpdate=ElevatorList.size()/2 + Floors.floorList.size()-6;
 		
-		if(frameCount%40==0 && moneyCount<1000){
+		if(frameCount%60==0 && moneyCount<1000){
 		 moneyCount+=moneyUpdate;
 		}
 		
@@ -178,7 +205,7 @@ public class ElevatorGame extends BasicGameState{
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
-			if(renderLocX<(ElevatorList.size()-2)*500-150)
+			if(renderLocX<(ElevatorList.size()-2)*482-150)
 				renderLocX+=10;
 		}
 		
@@ -206,9 +233,10 @@ public class ElevatorGame extends BasicGameState{
 						for (int w = 0; w < ElevatorList.size(); w++) {
 							ElevatorList.get(w).increaseFloorCount();
 						}
-						if(Floors.floorList.size()<15)
+						if(Floors.floorList.size()<15){
 							Floors.addFloor();
-						moneyCount-=50;
+							moneyCount-=50;
+						}
 					}
 		}
 	}

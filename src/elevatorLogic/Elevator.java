@@ -17,10 +17,12 @@ public class Elevator extends ElevatorAlgorithm {
 		passengerCount = 0;
 		maximumPassengers = 10;
 		position = 0;
-		for (int k = 0; k < 6; k++) {
+		for (int k = 0; k < Floors.floorList.size(); k++) {
 			nextPassengerLocation.add(0);
 			dropPassengerLocation.add(0);
+			panelList.add(false);
 		}
+		panelList.set(0, false);
 	}
 
 	public boolean ifOnFloor() {

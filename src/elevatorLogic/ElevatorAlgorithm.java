@@ -6,16 +6,16 @@ public class ElevatorAlgorithm extends ElevatorPassengers{
 	
 	int prevdirection;	
 	//this is the class that controls the direction the elevator is going.
-	//runAlgorithm shall be the function that STARTS the algoritm on finding which way the elevator should go.
+	//runAlgorithm shall/ be the function that STARTS the algoritm on finding which way the elevator should go.
 	public void runAlgorithm(){
 		if(destination==floor){
 			setDestination();
 			setVelocity(0);
 		}
 		if(destination>floor)
-		{	
+		{
 			setVelocity(1);
-			prevdirection = 1;	
+			prevdirection = 1;
 		}
 		if(destination<floor)
 		{
@@ -24,7 +24,12 @@ public class ElevatorAlgorithm extends ElevatorPassengers{
 		}
 		if(wait>0){
 			wait--;
+			doorControl();
 			setVelocity(0);
+			if(wait>=148){
+				getPeopleList();
+				getPassengerList();
+			}
 		}
 		//System.out.println("destination: " + destination + "floor: " + floor);
 	}
@@ -37,13 +42,14 @@ public class ElevatorAlgorithm extends ElevatorPassengers{
 			destination=analyzePassengers();	
 	 */
 		int i = 0; //lowest floor for dropping off
+		
 		int x = 0; //highest floor for dropping off
 		int g = 0; //lowest floor for picking up
-		int z = 0; //highest floor for picking up	
+		int z = 0; //highest floor for picking up
 		for(i = 0; i<dropPassengerLocation.size()-1 && dropPassengerLocation.get(i) == 0; i++);//lowest level with dropoff requests 
 		//System.out.println("dropoffmin: " + i);
 		for(x = dropPassengerLocation.size()-1; x>0 && dropPassengerLocation.get(x) == 0; x--);//highest level with dropoff requests	
-		//System.out.println("dropoffmax: " + x);	
+		//System.out.println("dropoffmax: " + x);
 		for(g = 0; g<nextPassengerLocation.size()-1 && nextPassengerLocation.get(g) == 0; g++);//lowest level that has pickup requests.
 		//System.out.println("pickupmin: " + g);	
 		for(z = nextPassengerLocation.size()-1; z>0 && nextPassengerLocation.get(z) == 0; z--);//highest level with pickup requests
@@ -51,7 +57,7 @@ public class ElevatorAlgorithm extends ElevatorPassengers{
 		
 		if(prevdirection == 1)//going up
 		{
-			//System.out.println(dropPassengerLocation.get(x));	
+			//System.out.println(dropPassengerLocation.get(x));
 			if(destination<=x && dropPassengerLocation.get(x) > 0  && x!=floor)
 			{
 				destination = x;
@@ -63,7 +69,7 @@ public class ElevatorAlgorithm extends ElevatorPassengers{
 				destination = z;
 				//System.out.println("1 People up to floor:" + destination);
 				return;
-			}	
+			}
 			if(dropPassengerLocation.get(i) > 0  && i!=floor)
 			{
 				destination = i;
@@ -113,7 +119,7 @@ public class ElevatorAlgorithm extends ElevatorPassengers{
 /*
 	public int analyzePassengers()
 	{		
-		int i,x;		
+		int i,x;
 		for(i = 0; i<dropPassengerLocation.size() | dropPassengerLocation.get(i) == 0; i++);//i lowest requested floor
 		for(x = dropPassengerLocation.size(); x>0 | dropPassengerLocation.get(i) == 0; x--);//x is highest requested floor		
 		return -1;

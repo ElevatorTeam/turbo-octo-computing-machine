@@ -15,6 +15,7 @@ public class ElevatorControl {
 	int destination = 0;
 	int chosenFloor;
 	int wait = 0;
+	int openDoors=0;
 	
 	//These 2 ArrayLists are the most important objects in all of the elevator classes.
 	//The "nextPassengerLocation" is the amount of people standing outside of the elevators on each floor.
@@ -22,6 +23,7 @@ public class ElevatorControl {
 	//On the other hand, dropPassengerLocation is the floor people inside the elevator want to be dropped off at.
 	ArrayList<Integer> nextPassengerLocation = new ArrayList<Integer>();
 	ArrayList<Integer> dropPassengerLocation = new ArrayList<Integer>();
+	ArrayList<Boolean> panelList = new ArrayList<Boolean>();
 	String passengersOn = "";
 	String passengersOff = "";
 	
@@ -65,27 +67,57 @@ public class ElevatorControl {
 		if(dropPassengerLocation.size()<15){
 			nextPassengerLocation.add(0);
 			dropPassengerLocation.add(0);
+			panelList.add(false);
 		}
 	}
 	
 	public String getPassengerList(){
 		passengersOn="";
-		for(int k = 0;k<dropPassengerLocation.size();k++)
-			if(dropPassengerLocation.get(k)>0)
+		for(int k = 0;k<dropPassengerLocation.size();k++){
+			if(dropPassengerLocation.get(k)>0){
 				if(passengersOn.equals(""))
 					 passengersOn+="" + (k+1);
 				else passengersOn+=", "+(k+1);
+				panelList.set(k, true);
+			}
+			else if(nextPassengerLocation.get(k)==0) panelList.set(k, false);
+		}
 		return "Floors to drop off on: \n" + passengersOn;
 	}
 	
 	public String getPeopleList(){
 		passengersOff="";
-		for(int k = 0;k<nextPassengerLocation.size();k++)
-			if(nextPassengerLocation.get(k)>0)
+		for(int k = 0;k<nextPassengerLocation.size();k++){
+			if(nextPassengerLocation.get(k)>0){
 				if(passengersOff.equals(""))
 					 passengersOff+="" + (k+1);
 				else passengersOff+=", "+(k+1);
+				panelList.set(k, true);
+			}
+			else if(dropPassengerLocation.get(k)==0) panelList.set(k, false);
+		}
 		return "Floors to pick up on: \n" + passengersOff;
+	}
+	
+	public void doorControl(){
+		if(wait>0){
+			if(wait>100)
+				openDoors++;
+			if(wait<50)
+				openDoors--;
+			if(wait<2)
+				openDoors=0;
+			if(openDoors>50)
+				openDoors=50;
+		}
+	}
+	
+	public int getDoors(){
+		return openDoors;
+	}
+	
+	public ArrayList<Boolean> getPanelNumbers(){
+		return panelList;
 	}
 
 	public static int randInt(int min, int max) {
