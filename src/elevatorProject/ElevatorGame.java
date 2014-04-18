@@ -120,7 +120,7 @@ public class ElevatorGame extends BasicGameState{
 			door1.draw((k*482)+170-renderLocX-ElevatorList.get(k).getDoors(),height/6+50,width/16,height/9*4-50);
 			door2.draw((k*482)+237-renderLocX+ElevatorList.get(k).getDoors(),height/6+50,width/16,height/9*4-50);
 			g.drawString("" + (ElevatorList.get(k).getFloor() + 1), (k*480)+200-renderLocX,height/6+18);
-			g.drawString("" + (ElevatorList.get(k).getNextFloor() + 1), (k*480)+260-renderLocX,height/6+18);
+			g.drawString("" + (ElevatorList.get(k).getNextFloor() + 1), (k*480)+190-renderLocX,height/6+18);
 		}
 		
 		bottomHud.draw(0,gc.getHeight()/3*2);
