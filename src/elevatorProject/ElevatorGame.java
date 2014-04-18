@@ -110,7 +110,7 @@ public class ElevatorGame extends BasicGameState{
 				Floors.floorList.get(z).draw(k*482-renderLocX, (int) (ElevatorList.get(k).getPosition()*4.0166667) - 482*z - 116);
 			elevatorImg.draw((k*480)+100-renderLocX,height/6,width/8,height/9*4);
 			g.drawString("" + (ElevatorList.get(k).getFloor() + 1), (k*480)+130-renderLocX,height/6+18);
-			g.drawString("next:" + (ElevatorList.get(k).getNextFloor() + 1), (k*480)+170-renderLocX,height/6+18);
+			g.drawString("" + (ElevatorList.get(k).getNextFloor() + 1), (k*480)+190-renderLocX,height/6+18);
 		}
 		
 		bottomHud.draw(0,gc.getHeight()/3*2);
@@ -207,8 +207,10 @@ public class ElevatorGame extends BasicGameState{
 							ElevatorList.get(w).increaseFloorCount();
 						}
 						if(Floors.floorList.size()<15)
+						{
 							Floors.addFloor();
-						moneyCount-=50;
+							moneyCount-=50;
+						}
 					}
 		}
 	}
