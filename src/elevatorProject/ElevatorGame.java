@@ -62,6 +62,9 @@ public class ElevatorGame extends BasicGameState{
     static Image buyFloor;
     static Image bottomHud;
     static Image topHud;
+    static Image door1;
+    static Image door2;
+    static Image panel;
     
 	
 	public ElevatorGame(int state) {
@@ -77,6 +80,9 @@ public class ElevatorGame extends BasicGameState{
 		buyFloor= new    Image("resources/images/Bewton2.png");
 		bottomHud= new   Image("resources/images/bottomHud.png");
 		topHud= new   Image("resources/images/topHud.png");
+		door1= new   Image("resources/images/door1.png");
+		door2= new   Image("resources/images/door2.png");
+		panel= new Image("resources/images/panel.png");
 		renderLocX = 0;
 		moneyCount = 0;
 		frameCount = 0;
@@ -128,6 +134,23 @@ public class ElevatorGame extends BasicGameState{
 		}
 	}
 	
+	public void panelDraw(int X, int Y, Graphics g, int k, GameContainer gc) {
+		int number=0;
+		g.setColor(Color.gray);
+		for(int row=1;row<=5;row++){
+			for(int col=1;col<=3;col++){
+				if(k<Floors.floorList.size() && (number)<Floors.floorList.size())
+					if(ElevatorList.get(k).getPanelNumbers().get(number))
+						g.setColor(Color.orange);
+					if((number)<Floors.floorList.size())
+						g.drawString(""+ (number+1), X+(30*(col-1)), Y+(30*(row-1)));
+					g.setColor(Color.gray);
+				number++;
+			}
+		}
+		g.setColor(Color.orange);
+	}
+
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException{
@@ -163,9 +186,9 @@ public class ElevatorGame extends BasicGameState{
 		//
 		//
 		
-		moneyUpdate=ElevatorList.size()/2;
+		moneyUpdate=ElevatorList.size()/2 + Floors.floorList.size()-6;
 		
-		if(frameCount%40==0 && moneyCount<1000){
+		if(frameCount%60==0 && moneyCount<1000){
 		 moneyCount+=moneyUpdate;
 		}
 		
@@ -178,7 +201,7 @@ public class ElevatorGame extends BasicGameState{
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
-			if(renderLocX<(ElevatorList.size()-2)*500-150)
+			if(renderLocX<(ElevatorList.size()-2)*482-150)
 				renderLocX+=10;
 		}
 		
