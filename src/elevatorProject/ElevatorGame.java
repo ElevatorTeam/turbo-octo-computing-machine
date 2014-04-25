@@ -84,11 +84,10 @@ public class ElevatorGame extends BasicGameState{
 		topHud= new   Image("resources/images/topHud.png");
 		door1= new   Image("resources/images/door1.png");
 		door2= new   Image("resources/images/door2.png");
-		//panel= new Image("resources/images/panel.png");
 		floorButtonOn = new Image("resources/images/floorButtonOn.png");
 		floorButtonOff = new Image("resources/images/floorButtonOff.png");
 		renderLocX = 0;
-		moneyCount = 999;
+		moneyCount = 0;
 		frameCount = 0;
 		moneyUpdate= 1;
 		ElevatorList.add(new Elevator());
@@ -119,7 +118,6 @@ public class ElevatorGame extends BasicGameState{
 			for(int z=0;z<Floors.floorList.size();z++)
 				Floors.floorList.get(z).draw(k*482-renderLocX, (int) (ElevatorList.get(k).getPosition()*4.0166667) - 482*z - 116);
 			elevatorImg.draw((k*482)+170-renderLocX,height/6,width/8,height/9*4);
-			//panel.draw((k*482)+192-renderLocX,height/6+60);
 			panelDraw((k*482)+196-renderLocX,height/6+65, g, k, gc);
 			door1.draw((k*482)+170-renderLocX-ElevatorList.get(k).getDoors(),height/6+50,width/16,height/9*4-50);
 			door2.draw((k*482)+237-renderLocX+ElevatorList.get(k).getDoors(),height/6+50,width/16,height/9*4-50);
