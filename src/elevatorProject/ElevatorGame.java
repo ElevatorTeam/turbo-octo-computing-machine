@@ -141,21 +141,22 @@ public class ElevatorGame extends BasicGameState{
 			g.drawString("Passenger Count: " + ElevatorList.get(k).getPassengerCount(), (k*482)+100-renderLocX,height/4*3+100);
 		}
 	}
-	
-	public void panelDraw(int X, int Y, Graphics g, int k, GameContainer gc) {
+
+	public void panelDraw(int X, int Y, Graphics g, int k, GameContainer gc){
 		int number=0;
 		g.setColor(Color.black);
 		for(int row=1;row<=5;row++){
 			for(int col=1;col<=3;col++){
-				if(number<Floors.floorList.size())
-					if(ElevatorList.get(k).getPanelNumbers().get(number) && (number)<Floors.floorList.size()){
+				if(number<Floors.floorList.size()){
+					if(ElevatorList.get(k).getPanelNumbers().get(number)){
 						floorButtonOn.draw(X+(30*(col-1))-4, Y+(30*(row-1)));
 						g.drawString(""+ (number+1), X+(30*(col-1)+2), Y+(30*(row-1))+3);
-					}	
-					else if((number)<Floors.floorList.size()){
+					}
+					else{
 						floorButtonOff.draw(X+(30*(col-1))-4, Y+(30*(row-1)));
 						g.drawString(""+ (number+1), X+(30*(col-1)+2), Y+(30*(row-1))+3);
 					}
+				}
 				number++;
 			}
 		}
