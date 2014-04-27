@@ -16,6 +16,9 @@ public class ElevatorControl {
 	int chosenFloor;
 	int wait = 0;
 	int openDoors=0;
+	double totalTime = 0;
+	int amountOfWaits = 0;
+	double averagedTime = 0;
 	
 	//These 2 ArrayLists are the most important objects in all of the elevator classes.
 	//The "nextPassengerLocation" is the amount of people standing outside of the elevators on each floor.
@@ -25,7 +28,8 @@ public class ElevatorControl {
 	ArrayList<Integer> nextPassengerLocation = new ArrayList<Integer>();
 	ArrayList<Integer> dropPassengerLocation = new ArrayList<Integer>();
 	ArrayList<Boolean> panelList = new ArrayList<Boolean>();
-	ArrayList<ArrayList<Integer>> passengerFloor = new ArrayList<ArrayList<Integer>>();	
+	ArrayList<WaitTime> waitList = new ArrayList<WaitTime>();
+
 	String passengersOn = "";
 	String passengersOff = "";
 	
@@ -44,7 +48,7 @@ public class ElevatorControl {
 	public int getVelocity(){
 		return velocity;
 	}
-
+	
 	public void setPosition(){
 		position+=velocity;
 		if(position>(dropPassengerLocation.size()-1)*120)
@@ -69,6 +73,7 @@ public class ElevatorControl {
 		if(dropPassengerLocation.size()<15){
 			nextPassengerLocation.add(0);
 			dropPassengerLocation.add(0);
+			waitList.add(new WaitTime());
 			panelList.add(false);
 		}
 	}
@@ -76,13 +81,17 @@ public class ElevatorControl {
 	public String getPassengerList(){
 		passengersOn="";
 		for(int k = 0;k<dropPassengerLocation.size();k++){
+			
 			if(dropPassengerLocation.get(k)>0){
 				if(passengersOn.equals(""))
 					 passengersOn+="" + (k+1);
-				else passengersOn+=", "+(k+1);
+				else
+					passengersOn+=", "+(k+1);
 				panelList.set(k, true);
 			}
-			else if(nextPassengerLocation.get(k)==0) panelList.set(k, false);
+			else if(nextPassengerLocation.get(k)==0){
+				panelList.set(k, false);
+			}
 		}
 		return "Floors to drop off on: \n" + passengersOn;
 	}
@@ -93,12 +102,17 @@ public class ElevatorControl {
 			if(nextPassengerLocation.get(k)>0){
 				if(passengersOff.equals(""))
 					 passengersOff+="" + (k+1);
-				else passengersOff+=", "+(k+1);
-				panelList.set(k, true);
+				else
+					passengersOff+=", "+(k+1);
+				//panelList.set(k, true);
 			}
 			else if(dropPassengerLocation.get(k)==0) panelList.set(k, false);
 		}
 		return "Floors to pick up on: \n" + passengersOff;
+	}
+	
+	public double getTime(){
+		return averagedTime;
 	}
 	
 	public void doorControl(){

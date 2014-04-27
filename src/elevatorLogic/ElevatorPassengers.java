@@ -8,12 +8,15 @@ public class ElevatorPassengers extends ElevatorControl {
 		//Everything below here controls the passengers
 		public void pickUpPassengers(){
 			if(floor>=0){
-				if(nextPassengerLocation.get(floor)>0)
+				if(nextPassengerLocation.get(floor)>0){
 					if(!ElevatorIsFull()){
 						addPassengers();
+						totalTime+=waitList.get(floor).endTime();
+						amountOfWaits++;
+						averagedTime=totalTime/amountOfWaits;
 					}
+				}
 			}
-			else System.out.println(floor);
 		}
 
 		public void addPassengers(){
@@ -37,7 +40,6 @@ public class ElevatorPassengers extends ElevatorControl {
 						wait=150;
 					}
 			}
-			else System.out.println(floor);
 		}
 		
 		public void setPassengerCount(){
