@@ -69,7 +69,7 @@ public class ElevatorGame extends BasicGameState{
     static Image floorButtonOff;
     
 	
-	public ElevatorGame(int state) {
+	public ElevatorGame(int state){
 		 this.state = state;
 	}
 	
@@ -94,7 +94,6 @@ public class ElevatorGame extends BasicGameState{
 		ElevatorList.add(new Elevator());
 		ElevatorList.add(new Elevator());
 		ElevatorList.add(new Elevator());
-		System.out.println("elevator list size: " + ElevatorList.size());
 		Font awtFont;
 		try {
 			awtFont = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("Aero.ttf"));
@@ -134,7 +133,8 @@ public class ElevatorGame extends BasicGameState{
 		g.drawString("" + ElevatorList.size(), 670, 20);
 		g.drawString("" + Floors.floorList.size(), 620, 60);
 		for(int k=0;k<ElevatorList.size();k++){
-			g.drawString(ElevatorList.get(k).getPassengerList(), (k*482)+100-renderLocX,height/4*3);
+			//g.drawString(ElevatorList.get(k).getPassengerList(), (k*482)+100-renderLocX,height/4*3);
+			g.drawString("Average time: " + (int) (ElevatorList.get(k).getTime()) + " seconds", (k*482)+100-renderLocX,height/4*3);
 			g.drawString(ElevatorList.get(k).getPeopleList(), (k*482)+100-renderLocX,height/4*3+50);
 			g.drawString("Passenger Count: " + ElevatorList.get(k).getPassengerCount(), (k*482)+100-renderLocX,height/4*3+100);
 		}
