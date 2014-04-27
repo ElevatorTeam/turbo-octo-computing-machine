@@ -80,4 +80,11 @@
             <classpath refid="elevator.classpath"/>
         </java>
     </target>
+	<target depends = "clean, build, if_windows, if_linux" name = "go" >
+		<java classname="elevatorProject.ElevatorProject" failonerror="true" fork="yes">
+            <jvmarg line="-Dorg.lwjgl.opengl.Display.allowSoftwareOpenGL=true"/>
+			<jvmarg line="-Djava.library.path=${native.path}"/>
+            <classpath refid="elevator.classpath"/>
+        </java>
+	</target>
 </project>
