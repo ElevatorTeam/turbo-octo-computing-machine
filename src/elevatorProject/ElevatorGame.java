@@ -65,6 +65,8 @@ public class ElevatorGame extends BasicGameState{
     static Image door1;
     static Image door2;
     static Image panel;
+    static Image floorButtonOn;
+    static Image floorButtonOff;
     
 	
 	public ElevatorGame(int state) {
@@ -82,7 +84,8 @@ public class ElevatorGame extends BasicGameState{
 		topHud= new   Image("resources/images/topHud.png");
 		door1= new   Image("resources/images/door1.png");
 		door2= new   Image("resources/images/door2.png");
-		panel= new Image("resources/images/panel.png");
+		floorButtonOn = new Image("resources/images/floorButtonOn.png");
+		floorButtonOff = new Image("resources/images/floorButtonOff.png");
 		renderLocX = 0;
 		moneyCount = 0;
 		frameCount = 0;
@@ -115,12 +118,11 @@ public class ElevatorGame extends BasicGameState{
 			for(int z=0;z<Floors.floorList.size();z++)
 				Floors.floorList.get(z).draw(k*482-renderLocX, (int) (ElevatorList.get(k).getPosition()*4.0166667) - 482*z - 116);
 			elevatorImg.draw((k*482)+170-renderLocX,height/6,width/8,height/9*4);
-			panel.draw((k*482)+192-renderLocX,height/6+60);
 			panelDraw((k*482)+196-renderLocX,height/6+65, g, k, gc);
 			door1.draw((k*482)+170-renderLocX-ElevatorList.get(k).getDoors(),height/6+50,width/16,height/9*4-50);
 			door2.draw((k*482)+237-renderLocX+ElevatorList.get(k).getDoors(),height/6+50,width/16,height/9*4-50);
-			g.drawString("" + (ElevatorList.get(k).getFloor() + 1), (k*480)+200-renderLocX,height/6+18);
-			g.drawString("" + (ElevatorList.get(k).getNextFloor() + 1), (k*480)+260-renderLocX,height/6+18);
+			g.drawString("" + (ElevatorList.get(k).getFloor() + 1), (k*482)+200-renderLocX,height/6+18);
+			g.drawString("" + (ElevatorList.get(k).getNextFloor() + 1), (k*482)+260-renderLocX,height/6+18);
 		}
 		
 		bottomHud.draw(0,gc.getHeight()/3*2);
@@ -132,23 +134,27 @@ public class ElevatorGame extends BasicGameState{
 		g.drawString("" + ElevatorList.size(), 670, 20);
 		g.drawString("" + Floors.floorList.size(), 620, 60);
 		for(int k=0;k<ElevatorList.size();k++){
-			g.drawString(ElevatorList.get(k).getPassengerList(), (k*480)+100-renderLocX,height/4*3);
-			g.drawString(ElevatorList.get(k).getPeopleList(), (k*480)+100-renderLocX,height/4*3+50);
-			g.drawString("Passenger Count: " + ElevatorList.get(k).getPassengerCount(), (k*480)+100-renderLocX,height/4*3+100);
+			g.drawString(ElevatorList.get(k).getPassengerList(), (k*482)+100-renderLocX,height/4*3);
+			g.drawString(ElevatorList.get(k).getPeopleList(), (k*482)+100-renderLocX,height/4*3+50);
+			g.drawString("Passenger Count: " + ElevatorList.get(k).getPassengerCount(), (k*482)+100-renderLocX,height/4*3+100);
 		}
 	}
-	
-	public void panelDraw(int X, int Y, Graphics g, int k, GameContainer gc) {
+
+	public void panelDraw(int X, int Y, Graphics g, int k, GameContainer gc){
 		int number=0;
-		g.setColor(Color.gray);
+		g.setColor(Color.black);
 		for(int row=1;row<=5;row++){
 			for(int col=1;col<=3;col++){
-				if(k<Floors.floorList.size() && (number)<Floors.floorList.size())
-					if(ElevatorList.get(k).getPanelNumbers().get(number))
-						g.setColor(Color.orange);
-					if((number)<Floors.floorList.size())
-						g.drawString(""+ (number+1), X+(30*(col-1)), Y+(30*(row-1)));
-					g.setColor(Color.gray);
+				if(number<Floors.floorList.size()){
+					if(ElevatorList.get(k).getPanelNumbers().get(number)){
+						floorButtonOn.draw(X+(30*(col-1))-4, Y+(30*(row-1)));
+						g.drawString(""+ (number+1), X+(30*(col-1)+2), Y+(30*(row-1))+3);
+					}
+					else{
+						floorButtonOff.draw(X+(30*(col-1))-4, Y+(30*(row-1)));
+						g.drawString(""+ (number+1), X+(30*(col-1)+2), Y+(30*(row-1))+3);
+					}
+				}
 				number++;
 			}
 		}
