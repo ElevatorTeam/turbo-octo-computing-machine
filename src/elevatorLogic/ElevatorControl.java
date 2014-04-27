@@ -27,9 +27,11 @@ public class ElevatorControl {
 	//passengerFloor is the number of passengers on  	
 	ArrayList<Integer> nextPassengerLocation = new ArrayList<Integer>();
 	ArrayList<Integer> dropPassengerLocation = new ArrayList<Integer>();
+<<<<<<< HEAD
+=======
 	ArrayList<Boolean> panelList = new ArrayList<Boolean>();
 	ArrayList<WaitTime> waitList = new ArrayList<WaitTime>();
-
+>>>>>>> 
 	String passengersOn = "";
 	String passengersOff = "";
 	
