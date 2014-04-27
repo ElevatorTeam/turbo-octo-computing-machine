@@ -196,7 +196,7 @@ public class ElevatorGame extends BasicGameState{
 		//
 		//
 		
-		moneyUpdate=ElevatorList.size()*10 + Floors.floorList.size()-6;
+		moneyUpdate=ElevatorList.size()/2 + Floors.floorList.size()-6;
 		
 		if(frameCount%60==0 && moneyCount<1000){
 		 moneyCount+=moneyUpdate;
